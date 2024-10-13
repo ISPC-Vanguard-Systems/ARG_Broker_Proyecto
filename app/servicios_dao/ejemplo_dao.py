@@ -2,6 +2,7 @@ from mysql.connector import Error
 from app.base_de_datos.conexion import Conexion
 from app.clases.usuario import Usuario
 
+
 def obtener_datos():
     conexion_obj = Conexion()
     if conexion_obj.conectar():
@@ -17,7 +18,9 @@ def obtener_datos():
         finally:
             conexion_obj.cerrar()
 
+
 def insertar_dato(nombre, edad):
+
     conexion_obj = Conexion()
     if conexion_obj.conectar():
         try:
@@ -32,6 +35,7 @@ def insertar_dato(nombre, edad):
             return False
         finally:
             conexion_obj.cerrar()
+
 
 def actualizar_dato(id, nuevo_nombre, nueva_edad):
     conexion_obj = Conexion()
@@ -48,6 +52,7 @@ def actualizar_dato(id, nuevo_nombre, nueva_edad):
             return False
         finally:
             conexion_obj.cerrar()
+
 
 def eliminar_dato(id):
     conexion_obj = Conexion()
