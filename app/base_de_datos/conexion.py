@@ -12,10 +12,10 @@ class Conexion:
         """Establece una conexión con la base de datos."""
         try:
             self.conexion = mysql.connector.connect(
-                host=os.getenv("HOST"),
-                user=os.getenv("DB_USER"),
-                password=os.getenv("DB_PASSWORD"),
-                database=os.getenv("DB_NAME")
+                host=os.getenv("http://bxhg7av36sf1uym9jely-mysql.services.clever-cloud.com"),
+                user=os.getenv("uhxhjceoahgp4u98"),
+                password=os.getenv("OinmQHRskRHND1iJAJVH"),
+                database=os.getenv("bxhg7av36sf1uym9jely")
             )
             if self.conexion.is_connected():
                 print("Conexión establecida con éxito")
