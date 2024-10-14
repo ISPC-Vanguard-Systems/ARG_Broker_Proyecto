@@ -45,6 +45,14 @@ def verificar_id_inversor(conexion_db, id_inversor):
 
     return resultado[0][0] > 0  # Retorna True si existe, False si no
 
+def obtener_inversor_por_email(conexion, email):
+    query = "SELECT * FROM inversores WHERE email = %s"
+    resultado = conexion.ejecutar_query(query, (email,))
+    return resultado if resultado else None
+
+def verificar_existencia(conexion, campo, valor):
+    query = f"SELECT 1 FROM inversores WHERE {campo} = %s"
+    return bool(conexion.consultar(query, (valor,)))
 
 
 def registrar_inversor(inversor: Inversor):
@@ -89,7 +97,6 @@ def registrar_inversor(inversor: Inversor):
 
         if verificar_id_inversor(conexion_db, id_inversor):
             numero_cuenta = generar_numero_cuenta_aleatorio(conexion_db)
-            print(f"El numero de cuenta es: {numero_cuenta}")
             query_cuenta = """
                 INSERT INTO cuentas (numero_cuenta, saldo, fecha_creacion, id_inversor) 
                 VALUES (%s, %s, %s, %s)
@@ -123,16 +130,4 @@ def registrar_inversor(inversor: Inversor):
 
 
 
-# Trabajo con el inicio de sesion
 
-def obtener_inversor_por_email(email):
-    conexion_db = Conexion()
-    try:
-        conexion_db.establecer_conexion()
-        query = "SELECT * FROM inversores WHERE email = %s"
-        resultado = conexion_db.ejecutar_query(query, (email,))
-        return resultado[0] if resultado else None
-    except Exception as e:
-        print(f"Error al obtener el inversor: {e}")
-    finally:
-        conexion_db.cerrar_conexion()

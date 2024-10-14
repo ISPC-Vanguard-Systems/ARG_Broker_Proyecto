@@ -8,14 +8,14 @@ def ejecutar_menu():
     while True:
         print("\n--- MENÚ ---")
         print("1. Registrar inversor")
-        print("2. Buscar inversor por email")
+        print("2. Iniciar sesion")
         print("3. Salir")
         opcion = input("Seleccione una opción: ")
 
         if opcion == '1':
             registrar_nuevo_inversor()
         elif opcion == '2':
-            buscar_inversor()
+            iniciar_sesion()
         elif opcion == '3':
             print("Saliendo...")
             break
@@ -56,6 +56,25 @@ def solicitar_documento(tipo_documento, conexion):
         else:
             print("Documento inválido o ya registrado.")
 
+"""VALIDACION CONTRASEÑA"""
+def validar_contrasena(contrasena):
+    if (len(contrasena) < 8 or
+        not re.search(r"[A-Z]", contrasena) or  # Al menos una letra mayúscula
+        not re.search(r"[a-z]", contrasena) or  # Al menos una letra minúscula
+        not re.search(r"[0-9]", contrasena) or  # Al menos un número
+        not re.search(r"[!@#$%^&*(),.?\":{}|<>]", contrasena)):  # Al menos un símbolo
+        return False
+    return True
+
+def solicitar_contrasena():
+    while True:
+        contrasena = input("Ingrese la contraseña: ")
+        if validar_contrasena(contrasena):
+            print("Contraseña válida.")
+            return contrasena
+        else:
+            print("Contraseña inválida. Debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un símbolo.")
+
 def registrar_nuevo_inversor():
     # Instanciar la conexión
     conexion = Conexion()
@@ -91,16 +110,31 @@ def registrar_nuevo_inversor():
 
     tipo_inversor = solicitar_opcion("Seleccione el tipo de inversor (1- Persona Física, 2- Empresa): ", [1, 2])
 
-    contrasena = input("Ingrese la contraseña: ")
+    contrasena = solicitar_contrasena()
 
     inversor = Inversor(documento, email, telefono, razon_social, perfil_inversor, tipo_documento, tipo_inversor, contrasena)
     registrar_inversor(inversor)
 
 
-def buscar_inversor():
-    email = input("Ingrese el email del inversor: ")
-    inversor = obtener_inversor_por_email(email)
+# Trabajo con el inicio de sesion
+
+def iniciar_sesion():
+
+    conexion = Conexion()
+    conexion.establecer_conexion()
+
+    email = input("Ingrese su email: ")
+    contrasena = input("Ingrese su contraseña: ")
+
+    inversor = obtener_inversor_por_email(conexion, email)
+
     if inversor:
-        print(f"Inversor encontrado: {inversor}")
+        # Comparar la contraseña ingresada con la registrada
+        if inversor[0][1] == contrasena: 
+            print(f"Inicio de sesión exitoso. Bienvenido, {inversor[0][5]}!")
+        else:
+            print("Contraseña incorrecta. Intente nuevamente.")
     else:
-        print("Inversor no encontrado.")
+        print("Email no registrado.")
+
+    conexion.cerrar_conexion()
