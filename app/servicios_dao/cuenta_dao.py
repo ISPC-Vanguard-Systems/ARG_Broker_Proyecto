@@ -4,17 +4,18 @@ from app.clases.cuenta import Cuenta
 
 
 class CuentaDao:
-
+    def __init__(self, acceso_bd):
+        self.acceso_bd = acceso_bd
     def obtener_datos_cuenta(self, id_cuenta):
 
-        conexion = Conexion()
-        cursor = conexion.obtener_cursor()
+        # conexion = Conexion()
+        cursor = self.acceso_bd.obtener_cursor()
 
         if cursor is None:
             return None #no se puede obtener cursos, termina aqui
 
         try:
-            query = "SELECT numero_cuenta, saldo FROM cuentas WHERE id_cuenta = %s"
+            query = "SELECT numero_cuenta, saldo, fecha_creacion FROM cuentas WHERE id_cuenta = %s"
             cursor.execute(query, (id_cuenta,))#usar tupla con una coma
             datos = cursor.fetchone()
             return datos
@@ -23,7 +24,7 @@ class CuentaDao:
             return None
         finally:
             cursor.close()
-            conexion.cerrar_conexion()
+            self.acceso_bd.cerrar_conexion()
 
 
     def obtener_cuenta(self, id_cuenta):
