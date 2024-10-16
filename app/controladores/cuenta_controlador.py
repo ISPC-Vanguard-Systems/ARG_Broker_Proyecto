@@ -4,7 +4,8 @@ from app.clases.cuenta import Cuenta
 
 class CuentaControlador:
     def __init__(self, acceso_db):
-        self.cuenta_dao  = CuentaDao(acceso_db)
+        self.cuenta_dao = CuentaDao(acceso_db)
+
     def mostrar_datos_cuenta(self, id_cuenta):
 
         datos = self.cuenta_dao.obtener_datos_cuenta(id_cuenta)

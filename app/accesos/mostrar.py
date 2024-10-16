@@ -9,12 +9,16 @@ def ejecutar():
 
         print("1. Mostrar datos de la cuenta")
 
-        opcion = input("Seleccione una opcion")
+        opcion = input("Seleccione una opcion: ")
 
-        if opcion == '1':
+        if opcion == "1":
 
-            id_cuenta = int(input("Ingrese el ID de la cuenta:"))
+            id_cuenta = int(input("Ingrese el ID de la cuenta: "))
             cuenta_controlador.mostrar_datos_cuenta(id_cuenta)
+
+        elif opcion == "5":
+            print("Saliendo del programa")
+            break
 
         else:
             print("Opcion no valida")
