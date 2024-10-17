@@ -8,7 +8,7 @@ load_dotenv()
 class Conexion:
     def __init__(self):
         self.conexion = None
-
+        self.establecer_conexion()#agrego
     def establecer_conexion(self):
         """Establece la conexión con la base de datos."""
         try:

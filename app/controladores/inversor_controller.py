@@ -4,23 +4,24 @@ from app.clases.inversor import Inversor
 from app.base_de_datos.conexion import Conexion
 
 
-def ejecutar_menu():
-    while True:
-        print("\n--- MENÚ ---")
-        print("1. Registrar inversor")
-        print("2. Iniciar sesion")
-        print("3. Salir")
-        opcion = input("Seleccione una opción: ")
 
-        if opcion == '1':
-            registrar_nuevo_inversor()
-        elif opcion == '2':
-            iniciar_sesion()
-        elif opcion == '3':
-            print("Saliendo...")
-            break
-        else:
-            print("Opción no válida. Intente de nuevo.")
+# def ejecutar_menu():
+#     while True:
+#         print("\n--- MENÚ ---")
+#         print("1. Registrar inversor")
+#         print("2. Iniciar sesion")
+#         print("3. Salir")
+#         opcion = input("Seleccione una opción: ")
+#
+#         if opcion == '1':
+#             registrar_nuevo_inversor()
+#         elif opcion == '2':
+#             iniciar_sesion()
+#         elif opcion == '3':
+#             print("Saliendo...")
+#             break
+#         else:
+#             print("Opción no válida. Intente de nuevo.")
 
 """VALIDACION DE EMAIL"""
 def validar_email(email):
@@ -132,9 +133,10 @@ def iniciar_sesion():
         # Comparar la contraseña ingresada con la registrada
         if inversor[0][1] == contrasena: 
             print(f"Inicio de sesión exitoso. Bienvenido, {inversor[0][5]}!")
+            return True #agrego
         else:
             print("Contraseña incorrecta. Intente nuevamente.")
     else:
         print("Email no registrado.")
-
+        return False  #agrego
     conexion.cerrar_conexion()
