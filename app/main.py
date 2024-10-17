@@ -1,12 +1,6 @@
 from app.controladores.inversor_controller import iniciar_sesion, registrar_nuevo_inversor
 from app.accesos.mostrar import ejecutar
 
-# def main():
-#     print("Bienvenido a la plataforma de inversión.")
-#     ejecutar_menu()
-#
-# if __name__ == "__main__":
-#     main()
 def ejecutar_menu():
     while True:
         print("\n--- MENÚ ---")
