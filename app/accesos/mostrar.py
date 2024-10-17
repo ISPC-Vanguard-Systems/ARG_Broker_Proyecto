@@ -1,6 +1,6 @@
 from app.base_de_datos.conexion import Conexion
 from app.controladores.cuenta_controlador import CuentaControlador
-from app.controladores.inversor_controller import iniciar_sesion, registrar_nuevo_inversor
+
 
 def ejecutar():
     acceso_bd = Conexion()
