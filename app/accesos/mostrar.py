@@ -9,7 +9,8 @@ def ejecutar():
 
         print("1. Mostrar datos de la cuenta")
 
-        opcion = input("Seleccione una opcion: ")
+        opcion = input("Seleccione una opcion:n/ 1-Solicita ingresar nro de Cuenta"
+                       "opcion 5- Vuelve a menu principal")
 
         if opcion == "1":
 
