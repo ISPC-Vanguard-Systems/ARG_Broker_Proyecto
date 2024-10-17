@@ -26,12 +26,6 @@ class CuentaDao:
             self.acceso_bd.cerrar_conexion()
 
 
-    # def obtener_cuenta(self, id_cuenta):
-    #     datos = self.obtener_datos_cuenta(id_cuenta)
-    #     if datos:
-    #         return Cuenta(id_cuenta, *datos)
-    #     return None
-
 
 
 
