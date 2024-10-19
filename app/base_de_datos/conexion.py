@@ -58,11 +58,11 @@ class Conexion:
         finally:
             cursor.close()
 
-    def verificar_existencia(self, campo, valor):
-        """Verifica si el valor existe en la base de datos para el campo especificado."""
-        query = f"SELECT 1 FROM inversores WHERE {campo} = %s"
+    def verificar_existencia(self, tabla, campo, valor):
+        """Verifica si existe un registro en la tabla según el campo y valor proporcionados."""
+        query = f"SELECT COUNT(*) FROM {tabla} WHERE {campo} = %s"
         resultado = self.ejecutar_query(query, (valor,))
-        return len(resultado) > 0  # Retorna True si el valor existe
+        return resultado[0][0] > 0 if resultado else False
 
     def confirmar(self):
         """Confirma los cambios en la base de datos."""

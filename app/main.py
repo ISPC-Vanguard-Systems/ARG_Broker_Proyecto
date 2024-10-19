@@ -1,5 +1,7 @@
-from app.controladores.inversor_controller import iniciar_sesion, registrar_nuevo_inversor
+from app.controladores.inversor_controller import Inversor_Controller
 from app.accesos.mostrar import ejecutar
+
+controlador = Inversor_Controller()
 
 def ejecutar_menu():
     while True:
@@ -11,10 +13,11 @@ def ejecutar_menu():
         opcion = input("Seleccione una opción: ")
 
         if opcion == '1':
-            registrar_nuevo_inversor()
+            controlador.registrar_nuevo_inversor()
         elif opcion == '2':
-            if iniciar_sesion():  # Solo llama a ejecutar() si el inicio de sesión es exitoso
-                ejecutar()
+            inversor_logueado = controlador.iniciar_sesion()
+            if inversor_logueado:  # Solo llama a ejecutar() si el inicio de sesión es exitoso
+                ejecutar(inversor_logueado)
         elif opcion == '3':
             print("Saliendo...")
             break

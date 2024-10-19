@@ -1,4 +1,4 @@
-class Cuenta:
+class Cuenta: 
     def __init__(self, id_cuenta, numero_cuenta, saldo, fecha_creacion):
         self.__id_cuenta = id_cuenta
         self.__numero_cuenta = numero_cuenta
