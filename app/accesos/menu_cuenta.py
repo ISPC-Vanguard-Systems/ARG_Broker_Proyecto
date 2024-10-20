@@ -8,7 +8,7 @@ def ejecutar():
     while True:
 
         print("1. Mostrar datos de la cuenta")
-        print("2 Salir al menu principal")
+        print("2. Salir al menu principal")
         opcion = input("Seleccione una opcion:")
 
         if opcion == "1":
