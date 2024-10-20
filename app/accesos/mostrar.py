@@ -8,16 +8,15 @@ def ejecutar():
     while True:
 
         print("1. Mostrar datos de la cuenta")
-
-        opcion = input("Seleccione una opcion:n/ 1-Solicita ingresar nro de Cuenta"
-                       "opcion 5- Vuelve a menu principal")
+        print("2 Salir al menu principal")
+        opcion = input("Seleccione una opcion:")
 
         if opcion == "1":
 
             id_cuenta = int(input("Ingrese el ID de la cuenta: "))
             cuenta_controlador.mostrar_datos_cuenta(id_cuenta)
 
-        elif opcion == "5":
+        elif opcion == "2":
             print("Saliendo del programa")
             break
 
