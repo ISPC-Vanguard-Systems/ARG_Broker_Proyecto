@@ -8,17 +8,15 @@ class AccionesDAO:
         self.conexion.cerrar_conexion()
 
     def listar_acciones_disponibles(self):
-        """Lista las acciones disponibles en la base de datos."""
-        with self.conexion.establecer_conexion() as conexion:
-            query = "SELECT id_accion, simbolo, nombre_empresa, precio_compra, precio_venta FROM acciones"
-            acciones = conexion.ejecutar_query(query)
-            
-            if acciones:
-                print("\n--- Acciones Disponibles ---")
-                for accion in acciones:
-                    print(f"ID: {accion[0]} - Símbolo: {accion[1]} - Empresa: {accion[2]} - Precio Compra: {accion[3]} - Precio Venta: {accion[4]}")
-            else:
-                print("No hay acciones disponibles.")
+        query = "SELECT id_accion, simbolo, nombre_empresa, precio_compra, precio_venta FROM acciones"
+        acciones = self.conexion.ejecutar_query(query)
+        
+        if acciones:
+            print("\n--- Acciones Disponibles ---")
+            for accion in acciones:
+                print(f"ID: {accion[0]} - Símbolo: {accion[1]} - Empresa: {accion[2]} - Precio Compra: {accion[3]} - Precio Venta: {accion[4]}")
+        else:
+            print("No hay acciones disponibles.")
 
     def comprobar_accion(self, id_accion):
         """Comprueba si la acción existe en la base de datos."""
