@@ -1,3 +1,5 @@
+import re
+
 class Inversor:
     def __init__(self, documento, email, telefono, razon_social, perfil_inversor, tipo_documento, tipo_inversor, contrasena):
         self._documento = documento  # Encapsulamiento: atributos protegidos
@@ -56,7 +58,28 @@ class Inversor:
     def esta_bloqueado(self):
         """Indica si el inversor está bloqueado por intentos fallidos."""
         return self._intentos_fallidos >= 3
+    
+    """VALIDACION DE EMAIL"""
+    def validar_email(email):
+        # Expresión regular para validar email
+        patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        return re.match(patron, email) is not None
+    """VALIDACION DOCUMENTO"""
+    def validar_documento(documento, tipo_documento):
+        # Define las longitudes esperadas para cada tipo
+        longitudes = {1: 11, 2: 11, 3: 9}  # CUIL/CUIT: 11 dígitos, Pasaporte: 9 dígitos
+        return documento.isdigit() and len(documento) == longitudes.get(tipo_documento, 0)
 
+
+    """VALIDACION CONTRASEÑA"""
+    def validar_contrasena(contrasena):
+        if (len(contrasena) < 8 or
+            not re.search(r"[A-Z]", contrasena) or  # Al menos una letra mayúscula
+            not re.search(r"[a-z]", contrasena) or  # Al menos una letra minúscula
+            not re.search(r"[0-9]", contrasena) or  # Al menos un número
+            not re.search(r"[!@#$%^&*(),.?\":{}|<>]", contrasena)):  # Al menos un símbolo
+            return False
+        return True
     # Método para mostrar información del inversor
     def mostrar_info(self):
         return {

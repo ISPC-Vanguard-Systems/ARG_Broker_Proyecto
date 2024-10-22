@@ -113,6 +113,10 @@ class Inversor_DAO(InterfaceDAO):
             # Revertir la transacción en caso de error
             print(f"Error al registrar el inversor y su cuenta: {e}")
             self.conexion_db.revertir()
+        
+        finally:
+            # Cerrar el cursor y la conexión
+            self.conexion_db.cerrar_conexion()
 
     # Métodos no implementados de la interfaz
     def actualizar(self, objeto):

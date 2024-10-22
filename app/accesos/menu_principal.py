@@ -1,5 +1,7 @@
 from app.controladores.inversor_controller import Inversor_Controller
+
 from app.accesos.menu_cuenta import ejecutar
+
 
 def ejecutar_menu():
     inversor_ctrl = Inversor_Controller()
@@ -14,8 +16,11 @@ def ejecutar_menu():
         if opcion == '1':
             inversor_ctrl.registrar_nuevo_inversor()
         elif opcion == '2':
-            if inversor_ctrl.iniciar_sesion():
-                ejecutar()
+
+            inv_log = inversor_ctrl.iniciar_sesion()
+            if inv_log:
+                ejecutar(inv_log)
+
         elif opcion == '3':
             print("Saliendo...")
             break
