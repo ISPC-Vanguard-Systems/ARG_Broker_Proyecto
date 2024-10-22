@@ -14,7 +14,7 @@ class CuentaDao:
             return None #no se puede obtener cursos, termina aqui
 
         try:
-            query = "SELECT numero_cuenta, saldo, fecha_creacion FROM cuentas WHERE id_cuenta = %s"
+            query = "SELECT numero_cuenta, saldo, fecha_creacion FROM cuentas WHERE id_inversor = %s"
             cursor.execute(query, (id_cuenta,))#usar tupla con una coma
             datos = cursor.fetchone()
             return datos
