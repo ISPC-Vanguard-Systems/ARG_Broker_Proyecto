@@ -29,34 +29,30 @@ def ejecutar_menu_transacciones(cuenta_controlador, inversor, id_inversor):
 
 def ejecutar(inversor):
     acceso_bd = Conexion()
-    cuenta_controlador = CuentaControlador(acceso_bd)
-    inversor_logueado = Inversor_DAO().obtener_uno(inversor.email)
+    try:
+        cuenta_controlador = CuentaControlador(acceso_bd)
+        inversor_logueado = Inversor_DAO().obtener_uno(inversor.email)
 
-    id_inversor = inversor_logueado[0][0]
-    while True:
+        id_inversor = inversor_logueado[0][0]
+        while True:
+            print(f"\n--- BIENVENIDO {inversor.razon_social} ! ---")
+            print("1. Mostrar datos de la cuenta")
+            print("2. Listar activos de la cuenta")
+            print("3. Realizar transacciones")
+            opcion = input("Seleccione una opcion: ")
 
-        print(f"\n--- BIENVENIDO {inversor.razon_social} ! ---")
-
-        print("1. Mostrar datos de la cuenta")
-        print("2. Listar activos de la cuenta")
-        print("3. Realizar transacciones")
-
-        opcion = input("Seleccione una opcion: ")
-
-        if opcion == "1":
-            cuenta_controlador.mostrar_datos_cuenta(id_inversor)
-
-        elif opcion == "2":
-            pass
-
-        elif opcion == "3":
-            ejecutar_menu_transacciones(cuenta_controlador, inversor, id_inversor)
-
-        elif opcion == "5":
-            print("Saliendo del programa")
-            break
-
-        else:
-            print("Opcion no valida")
+            if opcion == "1":
+                cuenta_controlador.mostrar_datos_cuenta(id_inversor)
+            elif opcion == "2":
+                pass
+            elif opcion == "3":
+                ejecutar_menu_transacciones(cuenta_controlador, inversor, id_inversor)
+            elif opcion == "5":
+                print("Saliendo del programa")
+                break
+            else:
+                print("Opción no válida")
+    finally:
+        acceso_bd.cerrar_conexion()
 
 
