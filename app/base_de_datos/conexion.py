@@ -78,7 +78,7 @@ class Conexion:
 
     def verificar_existencia(self, campo, valor):
         """Verifica si el valor existe en la base de datos para el campo especificado."""
-        query = f"SELECT 1 FROM inversores WHERE {campo} = %s"
+        query = f"SELECT COUNT(*) FROM inversores WHERE {campo} = %s"
         resultado = self.ejecutar_query(query, (valor,))
         return len(resultado) > 0  # Retorna True si el valor existe
 

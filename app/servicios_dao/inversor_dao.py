@@ -6,7 +6,7 @@ from app.clases.inversor import Inversor
 from app.clases.interface_dao import InterfaceDAO
 
 class Inversor_DAO(InterfaceDAO):
-    def _init_(self):
+    def __init__(self):
         """Inicializa el DAO con una conexión a la base de datos."""
         self.conexion_db = Conexion()
 
