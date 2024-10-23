@@ -1,5 +1,4 @@
 from app.controladores.inversor_controller import Inversor_Controller
-
 from app.accesos.menu_cuenta import ejecutar
 
 
