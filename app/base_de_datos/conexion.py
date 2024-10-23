@@ -29,8 +29,8 @@ class Conexion:
             self.conexion = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="",
-                database="arg_broker"
+                password="admin",
+                database="broker"
             )
         except Error as e:
             print(f"Error al conectar con la base de datos: {e}")
