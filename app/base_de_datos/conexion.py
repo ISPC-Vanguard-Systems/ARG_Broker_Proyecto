@@ -29,8 +29,9 @@ class Conexion:
             self.conexion = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="",
-                database="arg_broker"
+                password="admin",
+                database="broker",
+                port=3307  # Especifica el puerto aquí
             )
         except Error as e:
             print(f"Error al conectar con la base de datos: {e}")
@@ -82,9 +83,11 @@ class Conexion:
                     except Exception as e:
                         self.revertir()
 
+
     def verificar_existencia(self, tabla, campo, valor):
         """Verifica si existe un registro en la tabla según el campo y valor proporcionados."""
         query = f"SELECT COUNT(*) FROM {tabla} WHERE {campo} = %s"
+
         resultado = self.ejecutar_query(query, (valor,))
         return resultado[0][0] > 0 if resultado else False
 
