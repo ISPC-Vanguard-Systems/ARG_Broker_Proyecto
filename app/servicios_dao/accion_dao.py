@@ -62,6 +62,35 @@ class AccionesDAO:
             )
             conexion.confirmar()
 
+    def listar_acciones_por_inversor(self, id_inversor):
+        with Conexion() as conexion:
+            query = """
+                SELECT a.id_accion, a.nombre_empresa, ap.cantidad_acciones, a.precio_venta
+                FROM acciones_por_inversores ap
+                JOIN acciones a ON ap.id_accion = a.id_accion
+                WHERE ap.id_inversor = %s
+            """
+            return conexion.ejecutar_query(query, (id_inversor,))
+
+    def comprobar_accion_por_inversor(self, id_inversor, id_accion):
+        with Conexion() as conexion:
+            query = """
+                SELECT a.id_accion, a.nombre_empresa, ap.cantidad_acciones, a.precio_venta
+                FROM acciones_por_inversores ap
+                JOIN acciones a ON ap.id_accion = a.id_accion
+                WHERE ap.id_inversor = %s AND ap.id_accion = %s
+            """
+            return conexion.ejecutar_query(query, (id_inversor, id_accion))
+
+    def actualizar_cantidad_acciones(self, id_inversor, id_accion, cantidad):
+        with Conexion() as conexion:
+            query = """
+                UPDATE acciones_por_inversores
+                SET cantidad_acciones = cantidad_acciones + %s
+                WHERE id_inversor = %s AND id_accion = %s
+            """
+            conexion.ejecutar_query(query, (cantidad, id_inversor, id_accion))
+            conexion.confirmar()
 
 
 

@@ -126,3 +126,4 @@ class Inversor_Controller():
         else:
             print("Email no registrado.")
             return None  # Email no encontrado
+

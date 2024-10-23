@@ -73,24 +73,52 @@ class CuentaControlador:
             print("Entrada inválida. Asegúrese de ingresar un número válido.")
 
 
-    def vender_acciones(self, id_cuenta, id_accion, cantidad):
-        query_check = """
-            SELECT cantidad_acciones FROM acciones_por_inversores 
-            WHERE id_inversor = %s AND id_accion = %s
-        """
-        resultado = self.conexion.ejecutar_query(query_check, (id_cuenta, id_accion))
+    def vender_acciones(self, id_inversor):
+        # Listar acciones disponibles del inversor
+        acciones_inversor = self.acciones_dao.listar_acciones_por_inversor(id_inversor)
 
-        if resultado and resultado[0][0] >= cantidad:
-            query_update = """
-                UPDATE acciones_por_inversores 
-                SET cantidad_acciones = cantidad_acciones - %s 
-                WHERE id_inversor = %s AND id_accion = %s
-            """
-            self.conexion.ejecutar_query(query_update, (cantidad, id_cuenta, id_accion))
-            self.conexion.confirmar()
-            print(f"Se vendieron {cantidad} acciones del ID {id_accion}.")
-        else:
-            print("No tiene suficientes acciones para vender.")
+        if not acciones_inversor:
+            print("No tienes acciones disponibles para vender.")
+            return
+
+        # Mostrar acciones disponibles
+        print("\n--- Tus Acciones ---")
+        for accion in acciones_inversor:
+            print(f"ID: {accion[0]} - Empresa: {accion[1]} - Cantidad: {accion[2]} - Precio Venta: {accion[3]}")
+
+        # Selección del ID de la acción a vender
+        try:
+            id_accion = int(input("\nIngrese el ID de la acción que desea vender: "))
+            accion = self.acciones_dao.comprobar_accion_por_inversor(id_inversor, id_accion)
+
+            if accion:
+                cantidad_disponible = accion[0][2]
+                cantidad = int(input(f"Ingrese la cantidad a vender (disponible: {cantidad_disponible}): "))
+
+                if cantidad <= cantidad_disponible:
+                    precio_venta = accion[0][3]
+                    monto_total = (precio_venta * cantidad) * Decimal(0.85)  # 15% de comisión
+
+                    # Registrar la transacción
+                    self.acciones_dao.registrar_transaccion(
+                        id_inversor, id_accion, cantidad, monto_total, Decimal(0.15) * monto_total, 2
+                    )
+
+                    # Actualizar el saldo del inversor
+                    saldo_actual = self.acciones_dao.obtener_saldo_inversor(id_inversor)
+                    self.acciones_dao.actualizar_saldo(id_inversor, saldo_actual + monto_total)
+
+                    # Actualizar la cantidad de acciones
+                    self.acciones_dao.actualizar_cantidad_acciones(id_inversor, id_accion, -cantidad)
+
+                    print(f"Venta exitosa: {cantidad} acciones de {accion[0][1]} por ${monto_total:.2f}.")
+                else:
+                    print("No tienes suficientes acciones para vender esa cantidad.")
+            else:
+                print("No tienes esa acción en tu portafolio.")
+        except ValueError:
+            print("Entrada inválida. Asegúrese de ingresar un número válido.")
+
 
 
 
