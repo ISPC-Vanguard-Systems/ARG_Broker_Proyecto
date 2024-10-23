@@ -1,29 +1,26 @@
 from mysql.connector import Error
+from app.base_de_datos.conexion import Conexion
 # from app.clases.cuenta import Cuenta
 
 
 class CuentaDao:
-    def __init__(self, acceso_bd):
-        self.acceso_bd = acceso_bd
+    def __init__(self):
+        pass
 
     def obtener_datos_cuenta(self, id_cuenta):
-
-        cursor = self.acceso_bd.obtener_cursor()
-
-        if cursor is None:
-            return None #no se puede obtener cursos, termina aqui
-
-        try:
-            query = "SELECT numero_cuenta, saldo, fecha_creacion FROM cuentas WHERE id_inversor = %s"
-            cursor.execute(query, (id_cuenta,))#usar tupla con una coma
-            datos = cursor.fetchone()
-            return datos
-        except Error as e:
-            print(f"Error al acceder a la base de datos: {e}")
-            return None
-        finally:
-            cursor.close()
-            self.acceso_bd.cerrar_conexion()
+        with Conexion() as conexion:
+            try:
+                query = """
+                    SELECT numero_cuenta, saldo, fecha_creacion 
+                    FROM cuentas 
+                    WHERE id_inversor = %s
+                """
+                resultado = conexion.ejecutar_query(query, (id_cuenta,))
+                return resultado[0] if resultado else None
+                
+            except Error as e:
+                print(f"Error al acceder a la base de datos: {e}")
+                return None
 
 
 

@@ -20,11 +20,17 @@ class Conexion:
     def establecer_conexion(self):
         """Establece la conexión con la base de datos."""
         try:
+            # self.conexion = mysql.connector.connect(
+            #     host="bxhg7av36sf1uym9jely-mysql.services.clever-cloud.com",
+            #     user="uhxhjceoahgp4u98",
+            #     password="OinmQHRskRHND1iJAJVH",
+            #     database="bxhg7av36sf1uym9jely"
+            # )
             self.conexion = mysql.connector.connect(
-                host="bxhg7av36sf1uym9jely-mysql.services.clever-cloud.com",
-                user="uhxhjceoahgp4u98",
-                password="OinmQHRskRHND1iJAJVH",
-                database="bxhg7av36sf1uym9jely"
+                host="localhost",
+                user="root",
+                password="",
+                database="arg_broker"
             )
         except Error as e:
             print(f"Error al conectar con la base de datos: {e}")
@@ -46,7 +52,7 @@ class Conexion:
             print("La conexión a la base de datos no está establecida.")
             return False
 
-        cursor = self.conexion.cursor(buffered=True)
+        cursor = self.conexion.cursor()
         try:
             if valores:
                 cursor.execute(query, valores)
