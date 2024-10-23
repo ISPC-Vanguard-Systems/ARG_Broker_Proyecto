@@ -30,7 +30,7 @@ class Conexion:
                 host="localhost",
                 user="root",
                 password="admin",
-                database="broker",
+                database="arg_broker",
                 port=3307  # Especifica el puerto aquí
             )
         except Error as e:
