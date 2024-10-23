@@ -30,7 +30,8 @@ class Conexion:
                 host="localhost",
                 user="root",
                 password="admin",
-                database="broker"
+                database="broker",
+                port=3307  # Especifica el puerto aquí
             )
         except Error as e:
             print(f"Error al conectar con la base de datos: {e}")
