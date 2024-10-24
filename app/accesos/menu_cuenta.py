@@ -14,7 +14,7 @@ def ejecutar(inversor):
         if not inversor_info:
             raise Exception("No se pudo obtener la información del inversor")
 
-        id_inversor = inversor_info[0][0]
+        id_inversor = inversor_info[0]
         while True:
             print(f"\n--- BIENVENIDO {inversor.razon_social} ! ---")
             print("1. Mostrar datos de la cuenta")
