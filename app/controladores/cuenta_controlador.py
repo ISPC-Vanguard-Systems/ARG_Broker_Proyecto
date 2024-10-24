@@ -46,11 +46,25 @@ class CuentaControlador:
         datos = self.cuenta_dao.obtener_datos_cuenta(id_cuenta)
         if datos:
             cuenta = Cuenta(id_cuenta, *datos)
+            transacciones = self.cuenta_dao.obtener_transacciones_por_cuenta(id_cuenta)
             print(f"Numero de Cuenta: {cuenta.get_numero_cuenta()}")
             print(f"Saldo: {cuenta.get_saldo()}")
             print((f"Fecha de Creacion: {cuenta.get_fecha_creacion()}"))
+
+
+
+            # Imprimir detalles de las transacciones si las hay
+            if transacciones:
+                for transaccion in transacciones:
+                    print( f"Transacción ID: {transaccion.get_id_transaccion()},"
+                           f"Cantidad Acciones: {transaccion.get_cantidad_acciones()}"
+                           f" Monto: {transaccion.get_monto_total()},"
+                           f" Comisión: {transaccion.get_comision()}")
+            else:
+                print("No hay transacciones para esta cuenta")
+
         else:
-            print("Cuenta no econtrada")
+            print("Cuenta no encontrada")
 
     def comprar_acciones(self, id_inversor):
         # Mostramos en primer lugar la lista de acciones
