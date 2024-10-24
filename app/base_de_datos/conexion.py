@@ -75,7 +75,6 @@ class Conexion:
     def verificar_existencia(self, tabla, campo, valor):
         """Verifica si existe un registro en la tabla según el campo y valor proporcionados."""
         query = f"SELECT COUNT(*) FROM {tabla} WHERE {campo} = %s"
-
         resultado = self.ejecutar_query(query, (valor,))
         return resultado[0][0] > 0 if resultado else False
 

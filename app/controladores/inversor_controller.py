@@ -93,7 +93,6 @@ class Inversor_Controller():
         
         # Intento de conectar a la base de datos y obtener el inversor por email
         inversor = self.Inversor_dao.obtener_uno(email)
-        print(inversor)
         if inversor:
             intentos = 3  # Número máximo de intentos permitidos
             while intentos > 0:

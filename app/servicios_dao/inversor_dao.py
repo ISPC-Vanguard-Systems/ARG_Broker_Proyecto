@@ -81,7 +81,6 @@ class Inversor_DAO(InterfaceDAO):
     def obtener_uno(self, email):
         query = "SELECT * FROM inversores WHERE email = %s"
         resultado = self.conexion_db.ejecutar_query(query, (email,))
-        print(f"resultado: {resultado}")
         return resultado[0] if resultado else None  # Asegúrate de retornar una tupla o None
 
 
