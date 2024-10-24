@@ -16,6 +16,7 @@ class CuentaControlador:
             cuenta = Cuenta(id_cuenta, *datos)
             print(f"Numero de Cuenta: {cuenta.get_numero_cuenta()}")
             print(f"Saldo: {cuenta.get_saldo()}")
+            print((f"Fecha de Creacion: {cuenta.get_fecha_creacion()}"))
         else:
             print("Cuenta no econtrada")
 
