@@ -1,8 +1,7 @@
 from app.base_de_datos.conexion import Conexion
+from app.clases.interface_dao import InterfaceDAO
 
-class AccionesDAO:
-    def __init__(self):
-        pass
+class AccionesDAO(InterfaceDAO):
 
     def listar_acciones_disponibles(self):
         with Conexion() as conexion: # Esto se llama context manager
@@ -91,6 +90,30 @@ class AccionesDAO:
             """
             conexion.ejecutar_query(query, (cantidad, id_inversor, id_accion))
             conexion.confirmar()
+
+    def verificar_existencia(self, campo, valor):
+        """Verifica si existe un registro según el campo y valor proporcionado"""
+        raise NotImplementedError("El método verificar_existencia no está implementado.")
+
+    def obtener_todos(self):
+        """Obtiene todos los registros"""
+        raise NotImplementedError("El método obtener_todos no está implementado.")
+
+    def obtener_uno(self, id):
+        """Encuentra un registro por su ID"""
+        raise NotImplementedError("El método obtener_uno no está implementado.")
+
+    def eliminar(self, id):
+        """Elimina un registro por su ID"""
+        raise NotImplementedError("El método eliminar no está implementado.")
+
+    def actualizar(self, id, data):
+        """Actualiza un registro existente"""
+        raise NotImplementedError("El método actualizar no está implementado.")
+
+    def insertar(self, data):
+        """Inserta un nuevo registro"""
+        raise NotImplementedError("El método insertar no está implementado.")
 
 
 
