@@ -26,7 +26,7 @@ def ejecutar(inversor):
             if opcion == "1":
                 cuenta_controlador.mostrar_datos_cuenta(id_inversor)
             elif opcion == "2":
-                pass
+                cuenta_controlador.mostrar_activos_portafolio(id_inversor)
             elif opcion == "3":
                 ejecutar_menu_transacciones(cuenta_controlador, inversor, id_inversor)
             elif opcion == "4":

@@ -3,11 +3,42 @@ from app.clases.cuenta import Cuenta
 from app.servicios_dao.accion_dao import AccionesDAO
 from decimal import Decimal
 from app.base_de_datos.conexion import Conexion
+import random
 
 class CuentaControlador:
     def __init__(self):
         self.cuenta_dao = CuentaDao()
         self.acciones_dao = AccionesDAO()
+
+    def mostrar_activos_portafolio(self, id_inversor):
+        """Genera precios aleatorios y muestra los activos del inversor con rendimiento."""
+        activos = self.acciones_dao.listar_acciones_por_inversor(id_inversor)
+
+        if not activos:
+            print("No tienes activos en tu portafolio.")
+            return
+
+        print("\n--- Activos del Portafolio ---")
+        for activo in activos:
+            id_accion = activo[0]
+            nombre_empresa = activo[1]
+            cantidad = int(activo[2])
+            precio_compra = Decimal(activo[3])  # Precio de compra almacenado
+
+            # Generar precios aleatorios
+            nuevo_precio_compra = round(precio_compra * Decimal(random.uniform(0.9, 1.1)), 2)
+            nuevo_precio_venta = round(precio_compra * Decimal(random.uniform(0.9, 1.1)), 2)
+
+            # Calcular rendimiento económico
+            rendimiento = round((nuevo_precio_venta - precio_compra) * cantidad, 2)
+
+            # Mostrar resultados
+            signo = "+" if rendimiento >= 0 else ""
+            print(f"ID: {id_accion} - Empresa: {nombre_empresa}")
+            print(f"Cantidad: {cantidad} acciones")
+            print(f"Precio Compra Actual: ${nuevo_precio_compra}")
+            print(f"Precio Venta Actual: ${nuevo_precio_venta}")
+            print(f"Rendimiento: {signo}${rendimiento}\n")
 
     def mostrar_datos_cuenta(self, id_cuenta):
 
@@ -16,6 +47,9 @@ class CuentaControlador:
             cuenta = Cuenta(id_cuenta, *datos)
             print(f"Numero de Cuenta: {cuenta.get_numero_cuenta()}")
             print(f"Saldo: {cuenta.get_saldo()}")
+
+            # Total Invertido = Select todas las transacciones de tipo 1 (compra) para el inversor
+            
         else:
             print("Cuenta no econtrada")
 
@@ -72,7 +106,6 @@ class CuentaControlador:
         except ValueError:
             print("Entrada inválida. Asegúrese de ingresar un número válido.")
 
-
     def vender_acciones(self, id_inversor):
         # Listar acciones disponibles del inversor
         acciones_inversor = self.acciones_dao.listar_acciones_por_inversor(id_inversor)
@@ -118,8 +151,3 @@ class CuentaControlador:
                 print("No tienes esa acción en tu portafolio.")
         except ValueError:
             print("Entrada inválida. Asegúrese de ingresar un número válido.")
-
-
-
-
-
