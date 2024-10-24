@@ -1,5 +1,6 @@
 from app.servicios_dao.cuenta_dao import CuentaDao
-from app.clases.cuenta import Cuenta 
+from app.clases.cuenta import Cuenta
+from app.clases.transaccion import Transaccion
 from app.servicios_dao.accion_dao import AccionesDAO
 from decimal import Decimal
 from app.base_de_datos.conexion import Conexion
@@ -48,7 +49,6 @@ class CuentaControlador:
             print(f"Numero de Cuenta: {cuenta.get_numero_cuenta()}")
             print(f"Saldo: {cuenta.get_saldo()}")
             print((f"Fecha de Creacion: {cuenta.get_fecha_creacion()}"))
-
         else:
             print("Cuenta no econtrada")
 
