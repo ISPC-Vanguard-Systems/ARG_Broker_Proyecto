@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class InterfaceDAO(ABC):
 
     @abstractmethod
-    def verificar_existencia(self):
+    def verificar_existencia(self, campo, valor):
         """Verifica si existe un registro según el campo y valor proporcionado"""
         pass
 
