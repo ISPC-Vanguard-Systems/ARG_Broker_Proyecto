@@ -13,9 +13,6 @@ def ejecutar_menu_transacciones(cuenta_controlador, inversor, id_inversor):
             cuenta_controlador.comprar_acciones(id_inversor)
         elif opcion == "2":
             cuenta_controlador.vender_acciones(id_inversor)
-            id_accion = int(input("Ingrese el ID de la acción a vender: "))
-            cantidad = int(input("Ingrese la cantidad de acciones a vender: "))
-            cuenta_controlador.vender_acciones(inversor['id_inversor'], id_accion, cantidad)
         elif opcion == "3":
             print("Volviendo al menú principal...")
             break

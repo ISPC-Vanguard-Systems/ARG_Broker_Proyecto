@@ -7,7 +7,6 @@ class Inversor_Controller():
 
     def __init__(self):
         self.Inversor_dao = Inversor_DAO()
-        # self.conexion_db = Conexion() La eliminamos porque es una conexion permanente
 
 
     def _solicitar_opcion(self, mensaje, opciones_validas):
@@ -94,26 +93,26 @@ class Inversor_Controller():
         
         # Intento de conectar a la base de datos y obtener el inversor por email
         inversor = self.Inversor_dao.obtener_uno(email)
-
+        print(inversor)
         if inversor:
             intentos = 3  # Número máximo de intentos permitidos
             while intentos > 0:
                 contrasena = input("Ingrese su contraseña: ")
 
                 # Comparar la contraseña ingresada con la registrada
-                if inversor[0][1] == contrasena:  # Asumiendo que la contraseña está en la columna 1
-                    print(f"Inicio de sesión exitoso. Bienvenido, {inversor[0][5]}!")
+                if inversor[1] == contrasena:
+                    print(f"Inicio de sesión exitoso. Bienvenido, {inversor[5]}!")
                     
                     # Crear un objeto inversor y devolverlo para futuras operaciones
                     inversor_obj = Inversor(
-                        documento=inversor[0][2],           # Documento
-                        email=inversor[0][3],               # Email
-                        telefono=inversor[0][4],            # Teléfono
-                        razon_social=inversor[0][5],        # Razón social
-                        perfil_inversor=inversor[0][6],     # Perfil
-                        tipo_documento=inversor[0][7],      # Tipo documento
-                        tipo_inversor=inversor[0][8],       # Tipo inversor
-                        contrasena=inversor[0][1]           # Contraseña
+                        documento=inversor[2],           # Documento
+                        email=inversor[3],               # Email
+                        telefono=inversor[4],            # Teléfono
+                        razon_social=inversor[5],        # Razón social
+                        perfil_inversor=inversor[6],     # Perfil
+                        tipo_documento=inversor[7],      # Tipo documento
+                        tipo_inversor=inversor[8],       # Tipo inversor
+                        contrasena=inversor[1]           # Contraseña
                     )
                     return inversor_obj  # Retorna el objeto inversor
                 else:
