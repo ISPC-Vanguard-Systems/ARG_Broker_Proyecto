@@ -1,7 +1,6 @@
 class Transaccion:
 
-    def __init__(self, id_transaccion, cantidad_acciones, monto_total,
-                 comision):
+    def __init__(self, id_transaccion, cantidad_acciones, monto_total, comision):
         self.__id_transaccion = id_transaccion
         self.__cantidad_acciones = cantidad_acciones
         self.__monto_total = monto_total
