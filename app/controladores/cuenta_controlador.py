@@ -47,9 +47,8 @@ class CuentaControlador:
             cuenta = Cuenta(id_cuenta, *datos)
             print(f"Numero de Cuenta: {cuenta.get_numero_cuenta()}")
             print(f"Saldo: {cuenta.get_saldo()}")
+            print((f"Fecha de Creacion: {cuenta.get_fecha_creacion()}"))
 
-            # Total Invertido = Select todas las transacciones de tipo 1 (compra) para el inversor
-            
         else:
             print("Cuenta no econtrada")
 

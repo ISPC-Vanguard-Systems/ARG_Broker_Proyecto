@@ -10,13 +10,13 @@ class CuentaDao(InterfaceDAO):
         with Conexion() as conexion:
             try:
                 query = """
-                    SELECT numero_cuenta, saldo, fecha_creacion 
-                    FROM cuentas 
-                    WHERE id_inversor = %s
+                SELECT numero_cuenta, saldo, fecha_creacion 
+                FROM cuentas 
+                WHERE id_inversor = %s
                 """
                 resultado = conexion.ejecutar_query(query, (id_cuenta,))
                 return resultado[0] if resultado else None
-                
+
             except Error as e:
                 print(f"Error al acceder a la base de datos: {e}")
                 return None
