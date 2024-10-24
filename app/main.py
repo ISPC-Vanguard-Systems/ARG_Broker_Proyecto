@@ -1,10 +1,10 @@
-from app.accesos.ejemplo_acceso import ejecutar_menu
+from app.accesos.menu_principal import ejecutar_menu
+
 
 def main():
-    # Inicializar app
-    print("App iniciada")
+    print("Bienvenido a la plataforma de inversión.")
+    ejecutar_menu()
+
 
 if __name__ == "__main__":
     main()
-
-ejecutar_menu()

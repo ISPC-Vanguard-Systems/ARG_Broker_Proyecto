@@ -35,3 +35,5 @@ def ejecutar(inversor):
                 print("Opción no válida")
     except Exception as e:
         print(f"Error durante la ejecución: {e}")
+
+

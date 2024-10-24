@@ -1,10 +1,10 @@
 from app.servicios_dao import ejemplo_dao
-
 def ver_datos():
     print("Mostrando los datos:")
     datos = ejemplo_dao.obtener_datos()
     for dato in datos:
         print(f"ID: {dato['id']}, Nombre: {dato['nombre']}, Edad: {dato['edad']}")
+
 
 def insertar_datos(nombre, edad):
     print(f"Insertando {nombre} con edad {edad}...")
@@ -14,6 +14,7 @@ def insertar_datos(nombre, edad):
     else:
         print("Error al insertar los datos.")
 
+
 def actualizar_datos(id, nuevo_nombre, nueva_edad):
     print(f"Actualizando registro con ID {id}...")
     resultado = ejemplo_dao.actualizar_dato(id, nuevo_nombre, nueva_edad)
@@ -21,6 +22,7 @@ def actualizar_datos(id, nuevo_nombre, nueva_edad):
         print("Datos actualizados correctamente.")
     else:
         print("Error al actualizar los datos.")
+
 
 def eliminar_datos(id):
     print(f"Eliminando registro con ID {id}...")
