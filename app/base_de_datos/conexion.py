@@ -12,10 +12,15 @@ class Conexion:
         self.establecer_conexion()#agrego
 
     def __enter__(self):
+        self.cursor = self.conexion.cursor()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.cerrar_conexion()
+        if exc_type is not None:
+            self.revertir()  # Rollback si ocurre un error
+        else:
+            self.confirmar()  # Commit si todo sale bien
+        self.cerrar_conexion()  # Cerrar la conexión
 
     def establecer_conexion(self):
         """Establece la conexión con la base de datos."""
@@ -33,9 +38,12 @@ class Conexion:
                 database="broker",
                 port=3307  # Especifica el puerto aquí
             )
+            if self.conexion.is_connected():
+                print("Conexión exitosa a la base de datos.")
         except Error as e:
             print(f"Error al conectar con la base de datos: {e}")
             self.conexion = None
+
 
     def iniciar_transaccion(self):
         """Inicia una transacción manualmente."""
@@ -82,6 +90,8 @@ class Conexion:
                         self.confirmar()
                     except Exception as e:
                         self.revertir()
+            if not mantener_transaccion and not self.transaccion_activa:
+                self.cerrar_conexion()
 
 
     def verificar_existencia(self, tabla, campo, valor):
