@@ -37,7 +37,9 @@ class CuentaDao(InterfaceDAO):
                 SELECT a.simbolo,
                        SUM(t.cantidad_acciones) AS total_acciones,
                        SUM(t.monto_total) AS monto_total,
-                       SUM(t.comision) AS total_comision 
+                       SUM(t.comision) AS total_comision,
+                       1000000 AS valor_inicial,
+                       (SUM(t.monto_total) - SUM(t.comision)) - 1000000 AS rendimiento
                 FROM transacciones t 
                 INNER JOIN cuentas c ON t.numero_cuenta = c.numero_cuenta 
                 INNER JOIN acciones a ON t.id_accion = a.id_accion
@@ -45,8 +47,8 @@ class CuentaDao(InterfaceDAO):
                 GROUP BY a.simbolo
             """
             resultado = conexion.ejecutar_query(query, (id_cuenta,))
-            return [Transaccion(simbolo, total_acciones, monto_total, total_comision) for
-                simbolo, total_acciones, monto_total, total_comision in resultado] if resultado else []
+            return [Transaccion(simbolo, total_acciones, monto_total, total_comision, valor_inicial, rendimiento) for
+                simbolo, total_acciones, monto_total, total_comision, valor_inicial, rendimiento in resultado] if resultado else []
 
 
 
