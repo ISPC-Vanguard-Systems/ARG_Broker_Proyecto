@@ -3,8 +3,6 @@ from app.base_de_datos.conexion import Conexion
 from app.clases.interface_dao import InterfaceDAO
 from app.clases.transaccion import Transaccion
 
-# from app.clases.cuenta import Cuenta
-
 
 class CuentaDao(InterfaceDAO):
     
@@ -36,14 +34,19 @@ class CuentaDao(InterfaceDAO):
     def obtener_transacciones_por_cuenta(self, id_cuenta):
         with Conexion() as conexion:
             query = """
-                SELECT t.id_transaccion, t.cantidad_acciones, t.monto_total, t.comision 
-               FROM transacciones t 
-               INNER JOIN cuentas c ON t.numero_cuenta = c.numero_cuenta 
-               WHERE c.id_cuenta = %s
+                SELECT a.simbolo,
+                       SUM(t.cantidad_acciones) AS total_acciones,
+                       SUM(t.monto_total) AS monto_total,
+                       SUM(t.comision) AS total_comision 
+                FROM transacciones t 
+                INNER JOIN cuentas c ON t.numero_cuenta = c.numero_cuenta 
+                INNER JOIN acciones a ON t.id_accion = a.id_accion
+                WHERE c.id_cuenta = %s
+                GROUP BY a.simbolo
             """
             resultado = conexion.ejecutar_query(query, (id_cuenta,))
-            return [Transaccion(id_transaccion, cantidad_acciones, monto_total, comision) for
-                id_transaccion, cantidad_acciones, monto_total, comision in resultado] if resultado else []
+            return [Transaccion(simbolo, total_acciones, monto_total, total_comision) for
+                simbolo, total_acciones, monto_total, total_comision in resultado] if resultado else []
 
 
 
