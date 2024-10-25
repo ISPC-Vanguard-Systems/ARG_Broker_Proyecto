@@ -1,6 +1,6 @@
+from datetime import datetime, date
 from app.servicios_dao.cuenta_dao import CuentaDao
 from app.clases.cuenta import Cuenta
-from app.clases.transaccion import Transaccion
 from app.servicios_dao.accion_dao import AccionesDAO
 from decimal import Decimal
 from app.base_de_datos.conexion import Conexion
@@ -16,17 +16,26 @@ class CuentaControlador:
         if datos:
             cuenta = Cuenta(id_cuenta, *datos)
             transacciones = self.cuenta_dao.obtener_transacciones_por_cuenta(id_cuenta)
+
+            fecha_creacion = cuenta.get_fecha_creacion()
+
+            if isinstance(fecha_creacion, (datetime, date)):
+                fecha_formateada = fecha_creacion.strftime("%d-%m-%Y")
+            else:
+                fecha_creacion = datetime.strptime(fecha_creacion, "%Y-%m-%d")
+                fecha_formateada = fecha_creacion.strftime("%d-%m-%Y")
+
             print(f"Numero de Cuenta: {cuenta.get_numero_cuenta()}")
             print(f"Saldo: {cuenta.get_saldo()}")
-            print((f"Fecha de Creacion: {cuenta.get_fecha_creacion()}"))
+            print((f"Fecha de Creacion de la Cuenta: {fecha_formateada}"))
 
             # Imprimir detalles de las transacciones si las hay
             if transacciones:
                 for transaccion in transacciones:
-                    print( f"Transacción ID: {transaccion.get_id_transaccion()},"
-                           f"Cantidad Acciones: {transaccion.get_cantidad_acciones()}"
-                           f" Monto: {transaccion.get_monto_total()},"
-                           f" Comisión: {transaccion.get_comision()}")
+                    print(f"Simbolo: {transaccion.get_simbolo()},"
+                          f"Cantidad Acciones: {transaccion.get_cantidad_acciones()}"
+                          f" Monto: {transaccion.get_monto_total()},"
+                          f" Comisión: {transaccion.get_comision()}")
             else:
                 print("No hay transacciones para esta cuenta")
         else:
