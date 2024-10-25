@@ -45,9 +45,11 @@ class Conexion:
 
     def ejecutar_query(self, query, valores=None, mantener_transaccion=False):
         """Ejecuta una consulta en la base de datos, manejando transacciones."""
-        if self.conexion is None:
-            print("La conexión a la base de datos no está establecida.")
-            return False
+        conexion_abierta = True
+        if self.conexion is None or not self.conexion.is_connected():
+            self.establecer_conexion()
+            conexion_abierta = False
+            
 
         cursor = self.conexion.cursor()
         try:
@@ -78,7 +80,7 @@ class Conexion:
                         self.confirmar()
                     except Exception as e:
                         self.revertir()
-            if not mantener_transaccion and not self.transaccion_activa:
+            if not mantener_transaccion and not self.transaccion_activa and not conexion_abierta:
                 self.cerrar_conexion()
 
     def iniciar_transaccion(self):
