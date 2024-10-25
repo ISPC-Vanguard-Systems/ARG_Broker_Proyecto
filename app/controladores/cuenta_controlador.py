@@ -33,11 +33,10 @@ class CuentaControlador:
             if transacciones:
                 for transaccion in transacciones:
                     print(f"Simbolo: {transaccion.get_simbolo()},"
-                          f"Cantidad Acciones: {transaccion.get_cantidad_acciones()}"
-                          f" Monto: {transaccion.get_monto_total()},"
-                          f" Comisión: {transaccion.get_comision()}"
-                          f" Valor Inicial: {transaccion.get_valor_inicial()}"
-                          f" Rendimiento: {transaccion.get_rendimiento()}"
+                          f" Monto Invertido $: {transaccion.get_monto_total()},"
+                          f" Comisiónes $: {transaccion.get_comision()}"
+                          f" Valor Inicial de cta $: {transaccion.get_valor_inicial()}"
+                          f" Rendimientos(incluye comisiones) $: {transaccion.get_rendimiento()}"
                           )
 
             else:
