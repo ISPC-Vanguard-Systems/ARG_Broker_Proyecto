@@ -106,6 +106,9 @@ class CuentaControlador:
         except ValueError:
             print("Entrada inválida. Asegúrese de ingresar un número válido.")
 
+        finally:
+            conexion.cerrar_conexion()
+
     def vender_acciones(self, id_inversor):
         # Listar acciones disponibles del inversor
         acciones_inversor = self.acciones_dao.listar_acciones_por_inversor(id_inversor)

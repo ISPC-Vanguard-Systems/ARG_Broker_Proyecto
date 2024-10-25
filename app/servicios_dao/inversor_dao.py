@@ -9,7 +9,8 @@ class Inversor_DAO(InterfaceDAO):
 
     def __init__(self):
         """Inicializa el DAO con una conexión a la base de datos."""
-        self.conexion_db = Conexion()
+        # self.conexion_db = Conexion()
+        pass
 
     def _generar_numero_cuenta_aleatorio(self):
         """Genera un número de cuenta aleatorio que no se repita en la base de datos."""
@@ -28,9 +29,10 @@ class Inversor_DAO(InterfaceDAO):
 
     def verificar_existencia(self, campo, valor):
         """Verifica si existe un registro según el campo y valor proporcionado."""
-        query = f"SELECT COUNT(*) FROM inversores WHERE {campo} = %s"
-        resultado = self.conexion_db.ejecutar_query(query, (valor,))
-        return resultado and resultado[0][0] > 0
+        with Conexion() as conexion:
+            query = f"SELECT COUNT(*) FROM inversores WHERE {campo} = %s"
+            resultado = conexion.ejecutar_query(query, (valor,))
+            return resultado and resultado[0][0] > 0
 
 
     def insertar(self, inversor: Inversor):
@@ -51,13 +53,21 @@ class Inversor_DAO(InterfaceDAO):
                     raise Exception("Error al ejecutar la inserción del inversor.")
                 
                 print("Inversor creado correctamente.")
+
+                conexion_db.confirmar()
                 
                 numero_cuenta = self._generar_numero_cuenta_aleatorio()
 
                 if numero_cuenta is None:
                     raise Exception("Error al generar un número de cuenta único.")
 
-                id_inversor = conexion_db.ejecutar_query("SELECT LAST_INSERT_ID()")[0][0]
+                id_inversor = conexion_db.ejecutar_query("SELECT LAST_INSERT_ID()")
+                print(id_inversor)
+
+                if id_inversor:
+                    id_inversor = id_inversor[0][0]  # Extraer el valor
+                else:
+                    raise Exception("No se pudo obtener el ID del inversor creado.")
 
                 query_cuenta = """
                 INSERT INTO cuentas (numero_cuenta, saldo, fecha_creacion, id_inversor) 
@@ -79,10 +89,10 @@ class Inversor_DAO(InterfaceDAO):
         raise NotImplementedError("El método obtener_todos no está implementado.")
 
     def obtener_uno(self, email):
-        query = "SELECT * FROM inversores WHERE email = %s"
-        resultado = self.conexion_db.ejecutar_query(query, (email,))
-        return resultado[0] if resultado else None  # Asegúrate de retornar una tupla o None
-
+        with Conexion() as conexion:
+            query = "SELECT * FROM inversores WHERE email = %s"
+            resultado = conexion.ejecutar_query(query, (email,))
+            return resultado[0] if resultado else None
 
     def eliminar(self, id):
         """Elimina un registro por su ID"""
