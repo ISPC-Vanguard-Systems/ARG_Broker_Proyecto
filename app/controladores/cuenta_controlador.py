@@ -151,3 +151,4 @@ class CuentaControlador:
                 print("No tienes esa acción en tu portafolio.")
         except ValueError:
             print("Entrada inválida. Asegúrese de ingresar un número válido.")
+ 

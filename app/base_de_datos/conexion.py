@@ -25,11 +25,17 @@ class Conexion:
     def establecer_conexion(self):
         """Establece la conexión con la base de datos."""
         try:
+            # self.conexion = mysql.connector.connect(
+            #     host=os.getenv("HOST"),
+            #     user=os.getenv("DB_USER"),
+            #     password=os.getenv("DB_PASSWORD"),
+            #     database=os.getenv("DB_NAME")
+            # )
             self.conexion = mysql.connector.connect(
-                host=os.getenv("HOST"),
-                user=os.getenv("DB_USER"),
-                password=os.getenv("DB_PASSWORD"),
-                database=os.getenv("DB_NAME")
+                host="localhost",
+                user="root",
+                password="",
+                database="arg_broker"
             )
             if self.conexion.is_connected():
                 print("Conexión exitosa a la base de datos.")
@@ -62,6 +68,18 @@ class Conexion:
             traceback.print_exc()
             self.revertir()  # Hace rollback si ocurre un error
             return False
+    
+        finally:
+            cursor.close()
+            # Si no se debe mantener la transacción, confirma o revierte según corresponda
+            if not mantener_transaccion:
+                if self.transaccion_activa:
+                    try:
+                        self.confirmar()
+                    except Exception as e:
+                        self.revertir()
+            if not mantener_transaccion and not self.transaccion_activa:
+                self.cerrar_conexion()
 
     def iniciar_transaccion(self):
         """Inicia una transacción manualmente."""
@@ -80,13 +98,13 @@ class Conexion:
 
     def confirmar(self):
         """Confirma los cambios en la base de datos."""
-        if self.conexion and self.conexion.is_connected():
-            try:
+        try:
+            if self.conexion and self.conexion.is_connected():
                 self.conexion.commit()
                 self.transaccion_activa = False
-            except Error as e:
-                print(f"Error al confirmar la transacción: {e}")
-                self.revertir()
+        except Error as e:
+            print(f"Error al confirmar la transacción: {e}")
+            self.revertir()
 
     def revertir(self):
         """Revierte la transacción actual."""
