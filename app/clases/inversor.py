@@ -11,27 +11,35 @@ class Inversor:
         self._id_tipo_inversor = tipo_inversor
         self._contrasena = contrasena  # Almacena la contraseña en texto plano
 
+    @property
     def documento(self):
         return self._documento
-
+    
+    @property
     def email(self):
         return self._email
 
+    @property
     def telefono(self):
         return self._telefono
 
+    @property
     def razon_social(self):
         return self._razon_social
 
+    @property
     def id_perfil_inversor(self):
         return self._id_perfil_inversor
 
+    @property
     def id_tipo_documento(self):
         return self._id_tipo_documento
 
+    @property
     def id_tipo_inversor(self):
         return self._id_tipo_inversor
 
+    @property
     def contrasena(self):
         return self._contrasena
 
@@ -56,12 +64,12 @@ class Inversor:
         # Expresión regular para validar email
         patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(patron, email) is not None
+    
     """VALIDACION DOCUMENTO"""
     def validar_documento(documento, tipo_documento):
         # Define las longitudes esperadas para cada tipo
         longitudes = {1: 11, 2: 11, 3: 9}  # CUIL/CUIT: 11 dígitos, Pasaporte: 9 dígitos
         return documento.isdigit() and len(documento) == longitudes.get(tipo_documento, 0)
-
 
     """VALIDACION CONTRASEÑA"""
     def validar_contrasena(contrasena):

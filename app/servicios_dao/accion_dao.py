@@ -1,5 +1,6 @@
 from app.base_de_datos.conexion import Conexion
 from app.clases.interface_dao import InterfaceDAO
+from tabulate import tabulate
 
 class AccionesDAO(InterfaceDAO):
 
@@ -10,8 +11,8 @@ class AccionesDAO(InterfaceDAO):
             
             if acciones:
                 print("\n--- Acciones Disponibles ---")
-                for accion in acciones:
-                    print(f"ID: {accion[0]} - Símbolo: {accion[1]} - Empresa: {accion[2]} - Precio Compra: {accion[3]} - Precio Venta: {accion[4]}")
+                headers = ["ID", "Símbolo", "Empresa", "Precio Compra", "Precio Venta"]
+                print(tabulate(acciones, headers=headers, tablefmt="fancy_grid"))
             else:
                 print("No hay acciones disponibles.")
 
