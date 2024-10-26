@@ -34,7 +34,7 @@ class CuentaDao(InterfaceDAO):
     def obtener_transacciones_por_cuenta(self, id_cuenta):
         with Conexion() as conexion:
             query = """
-                SELECT a.simbolo,
+                SELECT a.simbolo, i.razon_social,
                        SUM(t.monto_total) AS monto_total,
                        SUM(t.comision) AS total_comision,
                        1000000 AS valor_inicial,
@@ -42,12 +42,13 @@ class CuentaDao(InterfaceDAO):
                 FROM transacciones t 
                 INNER JOIN cuentas c ON t.numero_cuenta = c.numero_cuenta 
                 INNER JOIN acciones a ON t.id_accion = a.id_accion
+                INNER JOIN inversores i ON i.id_inversor = c.id_inversor
                 WHERE c.id_cuenta = %s
                 GROUP BY a.simbolo
             """
             resultado = conexion.ejecutar_query(query, (id_cuenta,))
-            return [Transaccion(simbolo, monto_total, total_comision, valor_inicial, rendimiento) for
-                simbolo, monto_total, total_comision, valor_inicial, rendimiento in resultado] if resultado else []
+            return [Transaccion(simbolo, razon_social, monto_total, total_comision, valor_inicial, rendimiento) for
+                simbolo, razon_social, monto_total, total_comision, valor_inicial, rendimiento in resultado] if resultado else []
 
 
 

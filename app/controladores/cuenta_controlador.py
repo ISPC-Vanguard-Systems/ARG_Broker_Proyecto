@@ -65,11 +65,12 @@ class CuentaControlador:
             # Imprimir detalles de las transacciones si las hay
             if transacciones:
                 for transaccion in transacciones:
-                    print(f"Simbolo: {transaccion.get_simbolo()},"
-                          f" Monto Invertido $: {transaccion.get_monto_total()},"
-                          f" Comisiónes $: {transaccion.get_comision()}"
-                          f" Valor Inicial de cta $: {transaccion.get_valor_inicial()}"
-                          f" Rendimientos(incluye comisiones) $: {transaccion.get_rendimiento()}"
+                    print(f" Razon Social: {transaccion.get_razon_social()},\n"
+                          f" Simbolo: {transaccion.get_simbolo()},\n"
+                          f" Monto Invertido $: {transaccion.get_monto_total()},\n"
+                          f" Comisiónes $: {transaccion.get_comision()},\n"
+                          f" Valor Inicial de Cuenta $: {transaccion.get_valor_inicial()},\n"
+                          f" Rendimientos(incluye comisiones) $: {transaccion.get_rendimiento()}\n"
                           )
 
             else:

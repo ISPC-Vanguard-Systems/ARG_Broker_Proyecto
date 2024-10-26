@@ -1,11 +1,13 @@
 class Transaccion:
 
-    def __init__(self, simbolo, monto_total, comision, valor_inicial, rendimiento):
+    def __init__(self, simbolo, razon_social, monto_total, comision, valor_inicial, rendimiento):
         self.__simbolo = simbolo
         self.__monto_total = monto_total
         self.__comision = comision
         self.__valor_inicial = valor_inicial
         self.__rendimiento = rendimiento
+        self.__razon_social = razon_social
+
 
     def get_simbolo(self):
         return self.__simbolo
@@ -36,6 +38,12 @@ class Transaccion:
 
     def set_rendimiento(self, rendimiento):
         self.__rendimiento = rendimiento
+
+    def get_razon_social(self):
+        return self.__razon_social
+
+    def set_razon_social(self, razon_social):
+        self.__razon_social = razon_social
 
 
 
