@@ -60,8 +60,6 @@ class CuentaControlador:
             print(f"Saldo: {cuenta.get_saldo()}")
             print((f"Fecha de Creacion de la Cuenta: {fecha_formateada}"))
 
-
-
             # Imprimir detalles de las transacciones si las hay
             if transacciones:
                 for transaccion in transacciones:
@@ -72,10 +70,8 @@ class CuentaControlador:
                           f" Valor Inicial de Cuenta $: {transaccion.get_valor_inicial()},\n"
                           f" Rendimientos(incluye comisiones) $: {transaccion.get_rendimiento()}\n"
                           )
-
             else:
                 print("No hay transacciones para esta cuenta")
-
         else:
             print("Cuenta no encontrada")
 
