@@ -5,6 +5,8 @@ from app.servicios_dao.accion_dao import AccionesDAO
 from decimal import Decimal
 from app.base_de_datos.conexion import Conexion
 import random
+from prettytable import PrettyTable
+from app.accesos.utils import mostrar_titulo
 
 class CuentaControlador:
     def __init__(self):
@@ -19,7 +21,11 @@ class CuentaControlador:
             print("No tienes activos en tu portafolio.")
             return
 
-        print("\n--- Activos del Portafolio ---")
+        # Crear tabla para mostrar los activos
+        tabla = PrettyTable()
+        tabla.field_names = ["ID", "Empresa", "Cantidad", "Precio Compra Actual", "Precio Venta Actual", "Rendimiento"]
+        tabla._min_table_width = 116
+
         for activo in activos:
             id_accion = activo[0]
             nombre_empresa = activo[1]
@@ -35,11 +41,14 @@ class CuentaControlador:
 
             # Mostrar resultados
             signo = "+" if rendimiento >= 0 else ""
-            print(f"ID: {id_accion} - Empresa: {nombre_empresa}")
-            print(f"Cantidad: {cantidad} acciones")
-            print(f"Precio Compra Actual: ${nuevo_precio_compra}")
-            print(f"Precio Venta Actual: ${nuevo_precio_venta}")
-            print(f"Rendimiento: {signo}${rendimiento}\n")
+            tabla.add_row([id_accion, nombre_empresa, cantidad, f"${nuevo_precio_compra}", f"${nuevo_precio_venta}", f"{signo}${rendimiento}"])
+            
+
+        mostrar_titulo("ACTIVOS EN TU PORTAFOLIO")
+
+        print()
+        print(tabla)
+
 
     def mostrar_datos_cuenta(self, id_inversor):
         rendimiento_acumulado = 0
@@ -88,12 +97,19 @@ class CuentaControlador:
             else:
                 print("No hay transacciones para esta cuenta")
 
-            # Mostrar la información de la cuenta
-            print(f"Fecha de Alta: {fecha_formateada}")
-            print(f"Nro de Cuenta: {cuenta.numero_cuenta}")
-            print(f"Saldo Disponible: ${cuenta.saldo:.2f}")
-            print(f"Total Invertido: ${total_invertido:.2f}")
-            print(f"Rendimiento Acumulado: ${rendimiento_acumulado:.2f}")
+            mostrar_titulo("DATOS DE LA CUENTA")
+
+            # Crear tabla
+            tabla = PrettyTable()
+            tabla.field_names = ["Descripción", "Informacion"]
+            tabla._min_table_width = 116
+            tabla.add_row(["Fecha de Alta", fecha_formateada])
+            tabla.add_row(["Nro de Cuenta", cuenta.numero_cuenta])
+            tabla.add_row(["Saldo Disponible", f"${cuenta.saldo:.2f}"])
+            tabla.add_row(["Total Invertido", f"${total_invertido:.2f}"])
+            tabla.add_row(["Rendimiento Acumulado", f"${rendimiento_acumulado:.2f}"])
+
+            print(tabla)
 
         else:
             print("Cuenta no encontrada")
@@ -101,6 +117,7 @@ class CuentaControlador:
     def comprar_acciones(self, id_inversor):
         # Mostramos en primer lugar la lista de acciones
         self.acciones_dao.listar_acciones_disponibles()
+        print()
 
         try:
             id_accion = int(input("Ingrese el ID de la acción que desea comprar: "))
@@ -163,9 +180,15 @@ class CuentaControlador:
             return
 
         # Mostrar acciones disponibles
-        print("\n--- Tus Acciones ---")
+        tabla = PrettyTable()
+        tabla.field_names = ["ID", "Empresa", "Cantidad", "Precio Venta"]
+        tabla._min_table_width = 116
+
         for accion in acciones_inversor:
-            print(f"ID: {accion[0]} - Empresa: {accion[1]} - Cantidad: {accion[2]} - Precio Venta: {accion[3]}")
+            tabla.add_row(accion)
+
+        print(tabla)
+        print()
 
         # Selección del ID de la acción a vender
         try:
