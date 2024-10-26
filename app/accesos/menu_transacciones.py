@@ -1,5 +1,4 @@
 def ejecutar_menu_transacciones(cuenta_controlador, inversor, id_inversor):
-
     while True:
 
         print(f"\n--- MENÚ DE TRANSACCIONES PARA {inversor.razon_social} ---")

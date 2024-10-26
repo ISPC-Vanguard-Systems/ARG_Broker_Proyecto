@@ -4,7 +4,7 @@ from app.clases.interface_dao import InterfaceDAO
 from app.clases.transaccion import Transaccion
 
 
-class CuentaDao(InterfaceDAO):
+class CuentaDAO(InterfaceDAO):
     
     def obtener_datos_cuenta(self, id_cuenta):
         with Conexion() as conexion:
@@ -26,7 +26,6 @@ class CuentaDao(InterfaceDAO):
         """Verifica si existe un registro según el campo y valor proporcionado"""
         raise NotImplementedError("El método verificar_existencia no está implementado.")
 
-
     def obtener_todos(self):
         """Obtiene todos los registros"""
         raise NotImplementedError("El método obtener_todos no está implementado.")
@@ -42,7 +41,7 @@ class CuentaDao(InterfaceDAO):
                 INNER JOIN cuentas c ON t.numero_cuenta = c.numero_cuenta
                 INNER JOIN acciones a ON t.id_accion = a.id_accion
                 INNER JOIN inversores i ON i.id_inversor = c.id_inversor
-                WHERE c.id_cuenta = %s
+                WHERE c.id_inversor = %s
                 GROUP BY a.id_accion, a.simbolo, i.razon_social, t.id_tipo_transaccion
             """
             resultado = conexion.ejecutar_query(query, (id_cuenta,))
