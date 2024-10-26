@@ -1,16 +1,19 @@
 from app.controladores.inversor_controlador import InversorControlador
 from app.accesos.menu_cuenta import ejecutar
-
+from app.accesos.utils import mostrar_titulo
 
 def ejecutar_menu():
     inversor_ctrl = InversorControlador()
 
     while True:
-        print("\n--- MENÚ ---")
+        mostrar_titulo("MENU PRINCIPAL")
+        print()
         print("1. Registrar inversor")
         print("2. Iniciar sesión")
         print("3. Salir")
+        print()
         opcion = input("Seleccione una opción: ")
+        print()
 
         if opcion == '1':
             inversor_ctrl.registrar_nuevo_inversor()

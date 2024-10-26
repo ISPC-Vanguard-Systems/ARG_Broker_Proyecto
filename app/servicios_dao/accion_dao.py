@@ -1,6 +1,6 @@
 from app.base_de_datos.conexion import Conexion
 from app.clases.interface_dao import InterfaceDAO
-from tabulate import tabulate
+from prettytable import PrettyTable
 
 class AccionesDAO(InterfaceDAO):
 
@@ -10,9 +10,14 @@ class AccionesDAO(InterfaceDAO):
             acciones = conexion.ejecutar_query(query)
             
             if acciones:
-                print("\n--- Acciones Disponibles ---")
-                headers = ["ID", "Símbolo", "Empresa", "Precio Compra", "Precio Venta"]
-                print(tabulate(acciones, headers=headers, tablefmt="fancy_grid"))
+                tabla = PrettyTable()
+                tabla.field_names = ["ID", "Símbolo", "Empresa", "Precio Compra", "Precio Venta"]
+                tabla._min_table_width = 116
+
+                for accion in acciones:
+                    tabla.add_row(accion)
+                
+                print(tabla)
             else:
                 print("No hay acciones disponibles.")
 
