@@ -25,19 +25,19 @@ class Conexion:
     def establecer_conexion(self):
         """Establece la conexión con la base de datos."""
         try:
-            # self.conexion = mysql.connector.connect(
-            #     host=os.getenv("HOST"),
-            #     user=os.getenv("DB_USER"),
-            #     password=os.getenv("DB_PASSWORD"),
-            #     database=os.getenv("DB_NAME")
-            # )
             self.conexion = mysql.connector.connect(
-                host="localhost",
-                user="root",
-                password="admin",
-                database="arg_broker",
-                port=3307  # Especifica el puerto aquí
+                host=os.getenv("HOST"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD"),
+                database=os.getenv("DB_NAME")
             )
+            # self.conexion = mysql.connector.connect(
+            #     host="localhost",
+            #     user="root",
+            #     password="admin",
+            #     database="arg_broker",
+            #     port=3307  # Especifica el puerto aquí
+            # )
 
             if self.conexion.is_connected():
                 print("Conexión exitosa a la base de datos.")
