@@ -1,9 +1,9 @@
-from app.controladores.inversor_controller import Inversor_Controller
+from app.controladores.inversor_controlador import InversorControlador
 from app.accesos.menu_cuenta import ejecutar
 
 
 def ejecutar_menu():
-    inversor_ctrl = Inversor_Controller()
+    inversor_ctrl = InversorControlador()
 
     while True:
         print("\n--- MENÚ ---")

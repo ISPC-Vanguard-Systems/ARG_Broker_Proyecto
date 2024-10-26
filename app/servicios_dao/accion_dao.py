@@ -4,7 +4,7 @@ from app.clases.interface_dao import InterfaceDAO
 class AccionesDAO(InterfaceDAO):
 
     def listar_acciones_disponibles(self):
-        with Conexion() as conexion: # Esto se llama context manager
+        with Conexion() as conexion:
             query = "SELECT id_accion, simbolo, nombre_empresa, precio_compra, precio_venta FROM acciones"
             acciones = conexion.ejecutar_query(query)
             

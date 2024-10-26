@@ -5,7 +5,7 @@ from app.base_de_datos.conexion import Conexion
 from app.clases.inversor import Inversor
 from app.clases.interface_dao import InterfaceDAO
 
-class Inversor_DAO(InterfaceDAO):
+class InversorDAO(InterfaceDAO):
 
     def __init__(self):
         """Inicializa el DAO con una conexión a la base de datos."""
@@ -62,7 +62,6 @@ class Inversor_DAO(InterfaceDAO):
                     raise Exception("Error al generar un número de cuenta único.")
 
                 id_inversor = conexion_db.ejecutar_query("SELECT LAST_INSERT_ID()")
-                print(id_inversor)
 
                 if id_inversor:
                     id_inversor = id_inversor[0][0]  # Extraer el valor

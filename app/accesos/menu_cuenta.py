@@ -1,13 +1,12 @@
-from app.base_de_datos.conexion import Conexion
 from app.controladores.cuenta_controlador import CuentaControlador
-from app.servicios_dao.inversor_dao import Inversor_DAO
+from app.servicios_dao.inversor_dao import InversorDAO
 from app.accesos.menu_transacciones import ejecutar_menu_transacciones
 
 
 def ejecutar(inversor):
     try:
         cuenta_controlador = CuentaControlador()
-        inversor_dao = Inversor_DAO()
+        inversor_dao = InversorDAO()
 
         # Obtener información del inversor
         inversor_info = inversor_dao.obtener_uno(inversor.email)

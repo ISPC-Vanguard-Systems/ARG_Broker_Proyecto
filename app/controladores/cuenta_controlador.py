@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from app.servicios_dao.cuenta_dao import CuentaDao
+from app.servicios_dao.cuenta_dao import CuentaDAO
 from app.clases.cuenta import Cuenta
 from app.servicios_dao.accion_dao import AccionesDAO
 from decimal import Decimal
@@ -8,7 +8,7 @@ import random
 
 class CuentaControlador:
     def __init__(self):
-        self.cuenta_dao = CuentaDao()
+        self.cuenta_dao = CuentaDAO()
         self.acciones_dao = AccionesDAO()
 
     def mostrar_activos_portafolio(self, id_inversor):
@@ -41,12 +41,14 @@ class CuentaControlador:
             print(f"Precio Venta Actual: ${nuevo_precio_venta}")
             print(f"Rendimiento: {signo}${rendimiento}\n")
 
-    def mostrar_datos_cuenta(self, id_cuenta):
+    def mostrar_datos_cuenta(self, id_inversor):
+        rendimiento_acumulado = 0
+        total_invertido = 0
 
-        datos = self.cuenta_dao.obtener_datos_cuenta(id_cuenta)
+        datos = self.cuenta_dao.obtener_datos_cuenta(id_inversor)
         if datos:
-            cuenta = Cuenta(id_cuenta, *datos)
-            transacciones = self.cuenta_dao.obtener_transacciones_por_cuenta(id_cuenta)
+            cuenta = Cuenta(id_inversor, *datos)
+            transacciones = self.cuenta_dao.obtener_transacciones_por_cuenta(id_inversor)
 
             fecha_creacion = cuenta.get_fecha_creacion()
 
@@ -56,25 +58,42 @@ class CuentaControlador:
                 fecha_creacion = datetime.strptime(fecha_creacion, "%Y-%m-%d")
                 fecha_formateada = fecha_creacion.strftime("%d-%m-%Y")
 
-            print(f"Numero de Cuenta: {cuenta.get_numero_cuenta()}")
-            print(f"Saldo: {cuenta.get_saldo()}")
-            print((f"Fecha de Creacion de la Cuenta: {fecha_formateada}"))
-
-
-
-            # Imprimir detalles de las transacciones si las hay
             if transacciones:
-                for transaccion in transacciones:
-                    print(f" Razon Social: {transaccion.get_razon_social()},\n"
-                          f" Simbolo: {transaccion.get_simbolo()},\n"
-                          f" Monto Invertido $: {transaccion.get_monto_total()},\n"
-                          f" Comisiónes $: {transaccion.get_comision()},\n"
-                          f" Valor Inicial de Cuenta $: {transaccion.get_valor_inicial()},\n"
-                          f" Rendimientos(incluye comisiones) $: {transaccion.get_rendimiento()}\n"
-                          )
+                # Calcular total invertido y rendimiento acumulado
+                total_invertido = (
+                    sum(t.get_monto_total() for t in transacciones if t.get_tipo() == 1) -
+                    sum(t.get_monto_total() for t in transacciones if t.get_tipo() == 2)
+                )
+                
+                acciones_dao = AccionesDAO()
+
+                # Calcular rendimiento acumulado
+                for t in transacciones:
+                    id_accion = t.get_id_accion()
+                    datos_accion = acciones_dao.comprobar_accion(id_accion)
+                    cantidad = acciones_dao.comprobar_accion_por_inversor(id_inversor, id_accion)[0][2]
+
+                    if datos_accion:
+                        precio_compra = datos_accion[0][3]
+                        precio_venta = datos_accion[0][4]
+
+                        # Generar precios aleatorios
+                        nuevo_precio_compra = round(precio_compra * Decimal(random.uniform(0.9, 1.1)), 2)
+                        nuevo_precio_venta = round(precio_compra * Decimal(random.uniform(0.9, 1.1)), 2)
+
+                        rendimiento = round((nuevo_precio_venta - nuevo_precio_compra) * cantidad, 2)
+
+                        rendimiento_acumulado += rendimiento
 
             else:
                 print("No hay transacciones para esta cuenta")
+
+            # Mostrar la información de la cuenta
+            print(f"Fecha de Alta: {fecha_formateada}")
+            print(f"Nro de Cuenta: {cuenta.get_numero_cuenta()}")
+            print(f"Saldo Disponible: ${cuenta.get_saldo():.2f}")
+            print(f"Total Invertido: ${total_invertido:.2f}")
+            print(f"Rendimiento Acumulado: ${rendimiento_acumulado:.2f}")
 
         else:
             print("Cuenta no encontrada")

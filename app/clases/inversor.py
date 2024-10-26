@@ -11,35 +11,27 @@ class Inversor:
         self._id_tipo_inversor = tipo_inversor
         self._contrasena = contrasena  # Almacena la contraseña en texto plano
 
-    @property
     def documento(self):
         return self._documento
 
-    @property
     def email(self):
         return self._email
 
-    @property
     def telefono(self):
         return self._telefono
 
-    @property
     def razon_social(self):
         return self._razon_social
 
-    @property
     def id_perfil_inversor(self):
         return self._id_perfil_inversor
 
-    @property
     def id_tipo_documento(self):
         return self._id_tipo_documento
 
-    @property
     def id_tipo_inversor(self):
         return self._id_tipo_inversor
 
-    @property
     def contrasena(self):
         return self._contrasena
 
