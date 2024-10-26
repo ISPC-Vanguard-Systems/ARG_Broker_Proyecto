@@ -1,49 +1,62 @@
 class Transaccion:
+    def __init__(self, id_accion, simbolo, razon_social, monto_total, comision, tipo):
+        self._id_accion = id_accion
+        self._simbolo = simbolo
+        self._razon_social = razon_social
+        self._monto_total = monto_total
+        self._comision = comision
+        self._tipo = tipo
 
-    def __init__(self, simbolo, razon_social, monto_total, comision, valor_inicial, rendimiento):
-        self.__simbolo = simbolo
-        self.__monto_total = monto_total
-        self.__comision = comision
-        self.__valor_inicial = valor_inicial
-        self.__rendimiento = rendimiento
-        self.__razon_social = razon_social
+    # Propiedad para id_accion
+    @property
+    def id_accion(self):
+        return self._id_accion
 
+    @id_accion.setter
+    def id_accion(self, value):
+        self._id_accion = value
 
-    def get_simbolo(self):
-        return self.__simbolo
+    # Propiedad para simbolo
+    @property
+    def simbolo(self):
+        return self._simbolo
 
-    def set_simbolo(self, simbolo):
-        self.__simbolo = simbolo
+    @simbolo.setter
+    def simbolo(self, value):
+        self._simbolo = value
 
-    def get_monto_total(self):
-        return self.__monto_total
+    # Propiedad para razon_social
+    @property
+    def razon_social(self):
+        return self._razon_social
 
-    def set_monto_total(self, monto_total):
-        self.__monto_total = monto_total
+    @razon_social.setter
+    def razon_social(self, value):
+        self._razon_social = value
 
-    def get_comision(self):
-        return self.__comision
+    # Propiedad para monto_total
+    @property
+    def monto_total(self):
+        return self._monto_total
 
-    def set_comision(self, comision):
-        self.__comision = comision
+    @monto_total.setter
+    def monto_total(self, value):
+        self._monto_total = value
 
-    def get_valor_inicial(self):
-        return self.__valor_inicial
+    # Propiedad para comision
+    @property
+    def comision(self):
+        return self._comision
 
-    def set_valor_inicial(self, valor_inicial):
-        self.__valor_inicial = valor_inicial
+    @comision.setter
+    def comision(self, value):
+        self._comision = value
 
-    def get_rendimiento(self):
-        return self.__rendimiento
+    # Propiedad para tipo
+    @property
+    def tipo(self):
+        return self._tipo
 
-    def set_rendimiento(self, rendimiento):
-        self.__rendimiento = rendimiento
-
-    def get_razon_social(self):
-        return self.__razon_social
-
-    def set_razon_social(self, razon_social):
-        self.__razon_social = razon_social
-
-
-
+    @tipo.setter
+    def tipo(self, value):
+        self._tipo = value

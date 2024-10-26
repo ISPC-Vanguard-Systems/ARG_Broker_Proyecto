@@ -1,13 +1,14 @@
-from app.base_de_datos.conexion import Conexion
 from app.controladores.cuenta_controlador import CuentaControlador
-from app.servicios_dao.inversor_dao import Inversor_DAO
+from app.servicios_dao.inversor_dao import InversorDAO
 from app.accesos.menu_transacciones import ejecutar_menu_transacciones
+from app.accesos.utils import mostrar_titulo
 
 
 def ejecutar(inversor):
     try:
+        
         cuenta_controlador = CuentaControlador()
-        inversor_dao = Inversor_DAO()
+        inversor_dao = InversorDAO()
 
         # Obtener información del inversor
         inversor_info = inversor_dao.obtener_uno(inversor.email)
@@ -16,12 +17,15 @@ def ejecutar(inversor):
 
         id_inversor = inversor_info[0]
         while True:
-            print(f"\n--- BIENVENIDO {inversor.razon_social} ! ---")
+            mostrar_titulo(f" BIENVENIDO {inversor.razon_social} !")
+            print()
             print("1. Mostrar datos de la cuenta")
             print("2. Listar activos de la cuenta")
             print("3. Realizar transacciones")
             print("4. Cerrar sesión")
+            print()
             opcion = input("Seleccione una opcion: ")
+            print()
 
             if opcion == "1":
                 cuenta_controlador.mostrar_datos_cuenta(id_inversor)

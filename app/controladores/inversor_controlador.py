@@ -1,13 +1,11 @@
 from app.clases.inversor import Inversor
-from app.servicios_dao.inversor_dao import Inversor_DAO
-from app.base_de_datos.conexion import Conexion
+from app.servicios_dao.inversor_dao import InversorDAO
 
 
-class Inversor_Controller():
+class InversorControlador():
 
     def __init__(self):
-        self.Inversor_dao = Inversor_DAO()
-
+        self.inversor_dao = InversorDAO()
 
     def _solicitar_opcion(self, mensaje, opciones_validas):
         while True:
@@ -27,7 +25,7 @@ class Inversor_Controller():
                 documento = input(f"Ingrese su {tipos[tipo_documento]}: ")
                 if not Inversor.validar_documento(documento, tipo_documento):
                     print("Documento inválido.")
-                elif self.Inversor_dao.verificar_existencia("documento", documento):
+                elif self.inversor_dao.verificar_existencia("documento", documento):
                     print("Documento ya registrado.")
                 else:
                     return documento
@@ -50,7 +48,7 @@ class Inversor_Controller():
         razon_social = ""
         while True:
             razon_social = input("Ingrese la razón social: ")
-            if not self.Inversor_dao.verificar_existencia("razon_social", razon_social):
+            if not self.inversor_dao.verificar_existencia("razon_social", razon_social):
                 break
             print("Razón social ya registrada.")
 
@@ -61,13 +59,14 @@ class Inversor_Controller():
         while True:
             email = input("Ingrese el email: ")
             if Inversor.validar_email(email):
-                break
+                if not self.inversor_dao.verificar_existencia("email", email):
+                    break
             print("Email inválido o ya registrado.")
 
         telefono = ""
         while True:
             telefono = input("Ingrese el teléfono: ")
-            if not self.Inversor_dao.verificar_existencia("telefono", telefono):
+            if not self.inversor_dao.verificar_existencia("telefono", telefono):
                 break
             print("Teléfono ya registrado.")
 
@@ -86,16 +85,16 @@ class Inversor_Controller():
             contrasena=contrasena
         )
 
-        return self.Inversor_dao.insertar(inversor)
+        return self.inversor_dao.insertar(inversor)
 
     def iniciar_sesion(self): 
         email = input("Ingrese su email: ")
         
         # Intento de conectar a la base de datos y obtener el inversor por email
-        inversor = self.Inversor_dao.obtener_uno(email)
+        inversor = self.inversor_dao.obtener_uno(email)
         if inversor:
-            intentos = 3  # Número máximo de intentos permitidos
-            while intentos > 0:
+            INTENTOS = 3  # Número máximo de intentos permitidos
+            while INTENTOS > 0:
                 contrasena = input("Ingrese su contraseña: ")
 
                 # Comparar la contraseña ingresada con la registrada
@@ -115,9 +114,9 @@ class Inversor_Controller():
                     )
                     return inversor_obj  # Retorna el objeto inversor
                 else:
-                    intentos -= 1
-                    if intentos > 0:
-                        print(f"Contraseña incorrecta. Intentos restantes: {intentos}.")
+                    INTENTOS -= 1
+                    if INTENTOS > 0:
+                        print(f"Contraseña incorrecta. Intentos restantes: {INTENTOS}.")
                     else:
                         print("Ha superado el número máximo de intentos. Sesión bloqueada.")
                         return None  # Bloqueo, retorna None

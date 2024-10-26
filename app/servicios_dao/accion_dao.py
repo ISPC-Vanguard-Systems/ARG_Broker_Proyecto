@@ -1,17 +1,23 @@
 from app.base_de_datos.conexion import Conexion
 from app.clases.interface_dao import InterfaceDAO
+from prettytable import PrettyTable
 
 class AccionesDAO(InterfaceDAO):
 
     def listar_acciones_disponibles(self):
-        with Conexion() as conexion: # Esto se llama context manager
+        with Conexion() as conexion:
             query = "SELECT id_accion, simbolo, nombre_empresa, precio_compra, precio_venta FROM acciones"
             acciones = conexion.ejecutar_query(query)
             
             if acciones:
-                print("\n--- Acciones Disponibles ---")
+                tabla = PrettyTable()
+                tabla.field_names = ["ID", "Símbolo", "Empresa", "Precio Compra", "Precio Venta"]
+                tabla._min_table_width = 116
+
                 for accion in acciones:
-                    print(f"ID: {accion[0]} - Símbolo: {accion[1]} - Empresa: {accion[2]} - Precio Compra: {accion[3]} - Precio Venta: {accion[4]}")
+                    tabla.add_row(accion)
+                
+                print(tabla)
             else:
                 print("No hay acciones disponibles.")
 

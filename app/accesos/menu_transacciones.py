@@ -1,13 +1,17 @@
+from app.accesos.utils import mostrar_titulo
+
 def ejecutar_menu_transacciones(cuenta_controlador, inversor, id_inversor):
-
     while True:
+        mostrar_titulo("TRANSACCIONES")
 
-        print(f"\n--- MENÚ DE TRANSACCIONES PARA {inversor.razon_social} ---")
-        print("1. Comprar acciones (Asignar al inversor)")
+        print()
+        print("1. Comprar acciones")
         print("2. Vender acciones")
         print("3. Volver al menú principal")
+        print()
 
         opcion = input("Seleccione una opción: ")
+        print()
 
         if opcion == "1":
             cuenta_controlador.comprar_acciones(id_inversor)

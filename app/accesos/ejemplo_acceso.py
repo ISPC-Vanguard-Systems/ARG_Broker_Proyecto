@@ -2,7 +2,6 @@ from app.controladores.ejemplo_controlador import ver_datos, insertar_datos, act
 
 
 def ejecutar_menu():
-
     while True:
         print("=== Menú Principal ===")
         print("1. Ver datos")

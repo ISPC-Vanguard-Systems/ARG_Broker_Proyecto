@@ -14,7 +14,7 @@ class Inversor:
     @property
     def documento(self):
         return self._documento
-
+    
     @property
     def email(self):
         return self._email
@@ -64,12 +64,12 @@ class Inversor:
         # Expresión regular para validar email
         patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(patron, email) is not None
+    
     """VALIDACION DOCUMENTO"""
     def validar_documento(documento, tipo_documento):
         # Define las longitudes esperadas para cada tipo
         longitudes = {1: 11, 2: 11, 3: 9}  # CUIL/CUIT: 11 dígitos, Pasaporte: 9 dígitos
         return documento.isdigit() and len(documento) == longitudes.get(tipo_documento, 0)
-
 
     """VALIDACION CONTRASEÑA"""
     def validar_contrasena(contrasena):
