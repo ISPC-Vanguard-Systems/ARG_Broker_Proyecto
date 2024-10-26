@@ -1,31 +1,42 @@
-class Cuenta: 
+class Cuenta:
     def __init__(self, id_cuenta, numero_cuenta, saldo, fecha_creacion):
-        self.__id_cuenta = id_cuenta
-        self.__numero_cuenta = numero_cuenta
-        self.__saldo = saldo
-        self.__fecha_creacion = fecha_creacion
+        self._id_cuenta = id_cuenta
+        self._numero_cuenta = numero_cuenta
+        self._saldo = saldo
+        self._fecha_creacion = fecha_creacion
 
-    def get_id_cuenta(self):
-        return self.__id_cuenta
+    # Propiedad para id_cuenta
+    @property
+    def id_cuenta(self):
+        return self._id_cuenta
 
-    def set_id_cuenta(self, id_cuenta):
-        self.__id_cuenta = id_cuenta
+    @id_cuenta.setter
+    def id_cuenta(self, value):
+        self._id_cuenta = value
 
-    def get_numero_cuenta(self):
-        return self.__numero_cuenta
+    # Propiedad para numero_cuenta
+    @property
+    def numero_cuenta(self):
+        return self._numero_cuenta
 
-    def set_numero_cuenta(self, numero_cuneta):
-        self.__numero_cuenta = numero_cuneta
+    @numero_cuenta.setter
+    def numero_cuenta(self, value):
+        self._numero_cuenta = value
 
-    def get_saldo(self):
-        return self.__saldo
+    # Propiedad para saldo
+    @property
+    def saldo(self):
+        return self._saldo
 
-    def set_saldo(self, saldo):
-        self.__saldo = saldo
+    @saldo.setter
+    def saldo(self, value):
+        self._saldo = value
 
-    def get_fecha_creacion(self):
-        return self.__fecha_creacion
+    # Propiedad para fecha_creacion
+    @property
+    def fecha_creacion(self):
+        return self._fecha_creacion
 
-    def set_fecha_creacion(self, fecha_creacion):
-        self.__fecha_creacion = fecha_creacion
-
+    @fecha_creacion.setter
+    def fecha_creacion(self, value):
+        self._fecha_creacion = value

@@ -50,7 +50,7 @@ class CuentaControlador:
             cuenta = Cuenta(id_inversor, *datos)
             transacciones = self.cuenta_dao.obtener_transacciones_por_cuenta(id_inversor)
 
-            fecha_creacion = cuenta.get_fecha_creacion()
+            fecha_creacion = cuenta.fecha_creacion
 
             if isinstance(fecha_creacion, (datetime, date)):
                 fecha_formateada = fecha_creacion.strftime("%d-%m-%Y")
@@ -61,15 +61,15 @@ class CuentaControlador:
             if transacciones:
                 # Calcular total invertido y rendimiento acumulado
                 total_invertido = (
-                    sum(t.get_monto_total() for t in transacciones if t.get_tipo() == 1) -
-                    sum(t.get_monto_total() for t in transacciones if t.get_tipo() == 2)
+                    sum(t.monto_total for t in transacciones if t.tipo == 1) -
+                    sum(t.monto_total for t in transacciones if t.tipo == 2)
                 )
                 
                 acciones_dao = AccionesDAO()
 
                 # Calcular rendimiento acumulado
                 for t in transacciones:
-                    id_accion = t.get_id_accion()
+                    id_accion = t.id_accion
                     datos_accion = acciones_dao.comprobar_accion(id_accion)
                     cantidad = acciones_dao.comprobar_accion_por_inversor(id_inversor, id_accion)[0][2]
 
@@ -90,8 +90,8 @@ class CuentaControlador:
 
             # Mostrar la información de la cuenta
             print(f"Fecha de Alta: {fecha_formateada}")
-            print(f"Nro de Cuenta: {cuenta.get_numero_cuenta()}")
-            print(f"Saldo Disponible: ${cuenta.get_saldo():.2f}")
+            print(f"Nro de Cuenta: {cuenta.numero_cuenta}")
+            print(f"Saldo Disponible: ${cuenta.saldo:.2f}")
             print(f"Total Invertido: ${total_invertido:.2f}")
             print(f"Rendimiento Acumulado: ${rendimiento_acumulado:.2f}")
 

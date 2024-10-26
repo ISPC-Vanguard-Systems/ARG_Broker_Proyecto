@@ -1,10 +1,12 @@
 from app.controladores.cuenta_controlador import CuentaControlador
 from app.servicios_dao.inversor_dao import InversorDAO
 from app.accesos.menu_transacciones import ejecutar_menu_transacciones
+from app.clases.inversor import Inversor
 
 
 def ejecutar(inversor):
     try:
+        
         cuenta_controlador = CuentaControlador()
         inversor_dao = InversorDAO()
 
