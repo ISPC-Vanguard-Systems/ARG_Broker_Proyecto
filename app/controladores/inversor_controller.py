@@ -61,7 +61,8 @@ class Inversor_Controller():
         while True:
             email = input("Ingrese el email: ")
             if Inversor.validar_email(email):
-                break
+                if not self.Inversor_dao.verificar_existencia("email", email):
+                    break
             print("Email inválido o ya registrado.")
 
         telefono = ""

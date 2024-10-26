@@ -31,16 +31,15 @@ class Conexion:
             #     password=os.getenv("DB_PASSWORD"),
             #     database=os.getenv("DB_NAME")
             # )
-            # self.conexion = mysql.connector.connect(
-            #     host="localhost",
-            #     user="root",
-            #     password="",
-            #     database="arg_broker"
-            #     port=3307  # Especifica el puerto aquí
-            # )
-
-            if self.conexion.is_connected():
-                print("Conexión exitosa a la base de datos.")
+            self.conexion = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="",
+                database="arg_broker",
+                port=3306,  # Especifica el puerto aquí
+            )
+            # if self.conexion.is_connected():
+            #     print("Conexión exitosa a la base de datos.")
         except Error as e:
             print(f"Error al conectar con la base de datos: {e}")
             self.conexion = None

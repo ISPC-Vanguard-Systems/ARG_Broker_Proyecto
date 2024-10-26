@@ -1,13 +1,18 @@
 class Transaccion:
 
-    def __init__(self, simbolo, razon_social, monto_total, comision, valor_inicial, rendimiento):
+    def __init__(self, id_accion, simbolo, razon_social, monto_total, comision, tipo):
+        self.__id_accion = id_accion
         self.__simbolo = simbolo
         self.__monto_total = monto_total
         self.__comision = comision
-        self.__valor_inicial = valor_inicial
-        self.__rendimiento = rendimiento
         self.__razon_social = razon_social
+        self.__tipo = tipo
 
+    def get_id_accion(self):
+        return self.__id_accion
+    
+    def set_id_accion(self, id_accion):
+        self.__id_accion = id_accion
 
     def get_simbolo(self):
         return self.__simbolo
@@ -27,23 +32,16 @@ class Transaccion:
     def set_comision(self, comision):
         self.__comision = comision
 
-    def get_valor_inicial(self):
-        return self.__valor_inicial
-
-    def set_valor_inicial(self, valor_inicial):
-        self.__valor_inicial = valor_inicial
-
-    def get_rendimiento(self):
-        return self.__rendimiento
-
-    def set_rendimiento(self, rendimiento):
-        self.__rendimiento = rendimiento
-
     def get_razon_social(self):
         return self.__razon_social
 
     def set_razon_social(self, razon_social):
         self.__razon_social = razon_social
 
+    def get_tipo(self):
+        return self.__tipo
+
+    def set_tipo(self, tipo):
+        self.__tipo = tipo
 
 
