@@ -18,7 +18,11 @@ class CuentaControlador:
         activos = self.acciones_dao.listar_acciones_por_inversor(id_inversor)
 
         if not activos:
-            print("No tienes activos en tu portafolio.")
+            print()
+            print("=" * 116)
+            print("=" * 40, "No tienes activos en tu portafolio.", "=" * 39)
+            print("=" * 116)
+            print()
             return
 
         # Crear tabla para mostrar los activos
@@ -94,9 +98,6 @@ class CuentaControlador:
 
                         rendimiento_acumulado += rendimiento
 
-            else:
-                print("No hay transacciones para esta cuenta")
-
             mostrar_titulo("DATOS DE LA CUENTA")
 
             # Crear tabla
@@ -112,7 +113,7 @@ class CuentaControlador:
             print(tabla)
 
         else:
-            print("Cuenta no encontrada")
+            print("❌ Cuenta no encontrada")
 
     def comprar_acciones(self, id_inversor):
         # Mostramos en primer lugar la lista de acciones
@@ -120,7 +121,7 @@ class CuentaControlador:
         print()
 
         try:
-            id_accion = int(input("Ingrese el ID de la acción que desea comprar: "))
+            id_accion = int(input("🡆 Ingrese el ID de la acción que desea comprar: "))
             with Conexion() as conexion:
                 try:
                     conexion.iniciar_transaccion()
@@ -129,8 +130,9 @@ class CuentaControlador:
                     accion = self.acciones_dao.comprobar_accion(id_accion)
 
                     if accion:
-                        print(f"Precio Compra: {accion[0][3]} - Precio Venta: {accion[0][4]}")
-                        cantidad = int(input("Ingrese la cantidad de acciones que desea comprar: "))
+                        print(f"🡆 Precio Compra: {accion[0][3]} - Precio Venta: {accion[0][4]}")
+                        print()
+                        cantidad = int(input("🡆 Ingrese la cantidad de acciones que desea comprar: "))
                         
                         # Calcular el monto total de la compra con la comisión (15%)
                         precio_compra = accion[0][3]
@@ -155,18 +157,19 @@ class CuentaControlador:
 
                             conexion.confirmar()
 
-                            print(f"Compra exitosa: {cantidad} acciones de {accion[0][2]} por ${monto_total:.2f}.")
+                            print()
+                            print(f"✅ Compra exitosa: {cantidad} acciones de {accion[0][2]} por ${monto_total:.2f}.")
                         else:
-                            print("Saldo insuficiente para realizar la compra.")
+                            print("❌ Saldo insuficiente para realizar la compra.")
                     else:
-                        print("La acción no existe. Por favor, ingrese un ID válido.")
+                        print("❌ La acción no existe. Por favor, ingrese un ID válido.")
 
                 except Exception as e:
                     conexion.revertir()
-                    print(f"Error en la transacción: {e}")
+                    print(f"❌ Error en la transacción: {e}")
 
         except ValueError:
-            print("Entrada inválida. Asegúrese de ingresar un número válido.")
+            print("❌ Entrada inválida. Asegúrese de ingresar un número válido.")
 
         finally:
             conexion.cerrar_conexion()
@@ -176,7 +179,11 @@ class CuentaControlador:
         acciones_inversor = self.acciones_dao.listar_acciones_por_inversor(id_inversor)
 
         if not acciones_inversor:
-            print("No tienes acciones disponibles para vender.")
+            print()
+            print("=" * 116)
+            print("=" * 38, "❌ No tienes acciones en tu portafolio.", "=" * 37)
+            print("=" * 116)
+            print()
             return
 
         # Mostrar acciones disponibles
@@ -192,12 +199,12 @@ class CuentaControlador:
 
         # Selección del ID de la acción a vender
         try:
-            id_accion = int(input("\nIngrese el ID de la acción que desea vender: "))
+            id_accion = int(input("\n🡆 Ingrese el ID de la acción que desea vender: "))
             accion = self.acciones_dao.comprobar_accion_por_inversor(id_inversor, id_accion)
 
             if accion:
                 cantidad_disponible = accion[0][2]
-                cantidad = int(input(f"Ingrese la cantidad a vender (disponible: {cantidad_disponible}): "))
+                cantidad = int(input(f"🡆 Ingrese la cantidad a vender (disponible: {cantidad_disponible}): "))
 
                 if cantidad <= cantidad_disponible:
                     precio_venta = accion[0][3]
@@ -215,11 +222,20 @@ class CuentaControlador:
                     # Actualizar la cantidad de acciones
                     self.acciones_dao.actualizar_cantidad_acciones(id_inversor, id_accion, -cantidad)
 
-                    print(f"Venta exitosa: {cantidad} acciones de {accion[0][1]} por ${monto_total:.2f}.")
+                    print()
+                    print(f"✅ Venta exitosa: {cantidad} acciones de {accion[0][1]} por ${monto_total:.2f}.")
                 else:
-                    print("No tienes suficientes acciones para vender esa cantidad.")
+                    print()
+                    print("=" * 116)
+                    print("=" * 35, "La cantidad solicitada supera la disponible.", "=" * 35)
+                    print("=" * 116)
+                    print()
             else:
-                print("No tienes esa acción en tu portafolio.")
+                print()
+                print("=" * 116)
+                print("=" * 37, "❌ La acción no existe en tu portafolio.", "=" * 37)
+                print("=" * 116)
+                print()
         except ValueError:
-            print("Entrada inválida. Asegúrese de ingresar un número válido.")
+            print("❌ Entrada inválida. Asegúrese de ingresar un número válido.")
  
