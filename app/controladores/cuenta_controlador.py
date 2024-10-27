@@ -135,8 +135,8 @@ class CuentaControlador:
                         cantidad = int(input("🡆 Ingrese la cantidad de acciones que desea comprar: "))
                         
                         # Calcular el monto total de la compra con la comisión (15%)
-                        precio_compra = accion[0][3]
-                        monto_total = round((precio_compra * cantidad) * Decimal(1.15), 2)  # 15% de comisión
+                        precio_venta = accion[0][4]
+                        monto_total = round((precio_venta * cantidad) * Decimal(1.015), 2)  # 1.5% de comisión
 
                         # Obtener el saldo del inversor
                         saldo = self.acciones_dao.obtener_saldo_inversor(id_inversor)
@@ -144,7 +144,7 @@ class CuentaControlador:
                         if saldo >= monto_total:
                             # Registrar la transacción en la tabla `transacciones`
                             self.acciones_dao.registrar_transaccion(
-                                id_inversor, id_accion, cantidad, monto_total, Decimal(0.15) * monto_total, 1
+                                id_inversor, id_accion, cantidad, monto_total, Decimal(0.015) * monto_total, 1
                             )
 
                             # Actualizar el saldo del inversor
@@ -152,7 +152,7 @@ class CuentaControlador:
 
                             # Asignar las acciones al inversor en la tabla `acciones_por_inversores`
                             self.acciones_dao.asignar_acciones(
-                                id_inversor, id_accion, cantidad, precio_compra, accion[0][4]
+                                id_inversor, id_accion, cantidad, precio_venta, accion[0][3]
                             )
 
                             conexion.confirmar()
@@ -208,11 +208,11 @@ class CuentaControlador:
 
                 if cantidad <= cantidad_disponible:
                     precio_venta = accion[0][3]
-                    monto_total = (precio_venta * cantidad) * Decimal(0.85)  # 15% de comisión
+                    monto_total = (precio_venta * cantidad) * Decimal(0.985)  # 1.5% de comisión
 
                     # Registrar la transacción
                     self.acciones_dao.registrar_transaccion(
-                        id_inversor, id_accion, cantidad, monto_total, Decimal(0.15) * monto_total, 2
+                        id_inversor, id_accion, cantidad, monto_total, Decimal(0.015) * monto_total, 2
                     )
 
                     # Actualizar el saldo del inversor
