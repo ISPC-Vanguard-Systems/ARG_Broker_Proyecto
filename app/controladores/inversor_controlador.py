@@ -35,6 +35,7 @@ class InversorControlador():
     def _solicitar_contrasena(self):
         while True:
             try:
+                print(" 🡆 Su contraseña debe contener mínimo 8 caracteres. Debe contener al menos una mayúscula, una minúscula, un número y un símbolo")
                 contrasena = input("🡆 Ingrese la contraseña: ")
                 if Inversor.validar_contrasena(contrasena):
                     print("✅ Contraseña válida.")
@@ -99,7 +100,6 @@ class InversorControlador():
 
                 # Comparar la contraseña ingresada con la registrada
                 if inversor[1] == contrasena:
-                    print(f"✅ Inicio de sesión exitoso. Bienvenido, {inversor[5]}!")
                     
                     # Crear un objeto inversor y devolverlo para futuras operaciones
                     inversor_obj = Inversor(
