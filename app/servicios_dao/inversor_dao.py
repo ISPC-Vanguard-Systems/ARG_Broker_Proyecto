@@ -51,8 +51,6 @@ class InversorDAO(InterfaceDAO):
                 )
                 if not conexion_db.ejecutar_query(query_inversor, valores_inversor):
                     raise Exception("Error al ejecutar la inserción del inversor.")
-                
-                print("Inversor creado correctamente.")
 
                 conexion_db.confirmar()
                 
@@ -78,7 +76,7 @@ class InversorDAO(InterfaceDAO):
                 if not conexion_db.ejecutar_query(query_cuenta, valores_cuenta):
                     raise Exception("Error al insertar la cuenta.")
 
-                print("Cuenta creada exitosamente. Inversor y cuenta registrados.")
+                print("✅ Cuenta creada correctamente.")
         
         except Exception as e:
             print(f"Error al registrar el inversor y su cuenta: {e}")

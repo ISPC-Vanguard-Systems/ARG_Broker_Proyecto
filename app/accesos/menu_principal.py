@@ -24,7 +24,7 @@ def ejecutar_menu():
                 ejecutar(inv_log)
 
         elif opcion == '3':
-            print("Saliendo...")
+            mostrar_titulo("SALIENDO DEL SISTEMA")
             break
         else:
             print("Opción no válida. Intente de nuevo.")

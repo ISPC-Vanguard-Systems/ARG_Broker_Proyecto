@@ -70,7 +70,7 @@ class AccionesDAO(InterfaceDAO):
     def listar_acciones_por_inversor(self, id_inversor):
         with Conexion() as conexion:
             query = """
-                SELECT a.id_accion, a.nombre_empresa, ap.cantidad_acciones, a.precio_venta
+                SELECT a.id_accion, a.nombre_empresa, ap.cantidad_acciones, a.precio_compra
                 FROM acciones_por_inversores ap
                 JOIN acciones a ON ap.id_accion = a.id_accion
                 WHERE ap.id_inversor = %s
@@ -80,7 +80,7 @@ class AccionesDAO(InterfaceDAO):
     def comprobar_accion_por_inversor(self, id_inversor, id_accion):
         with Conexion() as conexion:
             query = """
-                SELECT a.id_accion, a.nombre_empresa, ap.cantidad_acciones, a.precio_venta
+                SELECT a.id_accion, a.nombre_empresa, ap.cantidad_acciones, a.precio_compra
                 FROM acciones_por_inversores ap
                 JOIN acciones a ON ap.id_accion = a.id_accion
                 WHERE ap.id_inversor = %s AND ap.id_accion = %s
