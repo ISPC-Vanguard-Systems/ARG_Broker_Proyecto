@@ -40,3 +40,6 @@ class Cuenta:
     @fecha_creacion.setter
     def fecha_creacion(self, value):
         self._fecha_creacion = value
+
+
+print("esta es la clase Cuenta")
