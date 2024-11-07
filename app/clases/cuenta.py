@@ -42,4 +42,3 @@ class Cuenta:
         self._fecha_creacion = value
 
 
-print("esta es la clase Cuenta")
