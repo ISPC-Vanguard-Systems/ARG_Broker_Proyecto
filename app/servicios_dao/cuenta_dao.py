@@ -22,6 +22,7 @@ class CuentaDAO(InterfaceDAO):
                 raise
                 # return None
 
+
     def verificar_existencia(self, campo, valor):
         """Verifica si existe un registro según el campo y valor proporcionado"""
         raise NotImplementedError("El método verificar_existencia no está implementado.")
@@ -29,6 +30,7 @@ class CuentaDAO(InterfaceDAO):
     def obtener_todos(self):
         """Obtiene todos los registros"""
         raise NotImplementedError("El método obtener_todos no está implementado.")
+
 
     def obtener_transacciones_por_cuenta(self, id_cuenta):
         with Conexion() as conexion:
@@ -45,10 +47,12 @@ class CuentaDAO(InterfaceDAO):
                 GROUP BY a.id_accion, a.simbolo, i.razon_social, t.id_tipo_transaccion
             """
             resultado = conexion.ejecutar_query(query, (id_cuenta,))
+
             return [
                 Transaccion(id_accion, simbolo, razon_social, monto_total, total_comision, tipo)
                 for id_accion, simbolo, razon_social, monto_total, total_comision, tipo in resultado
             ] if resultado else []
+
 
     def obtener_uno(self, id):
         """Encuentra un registro por su ID"""
