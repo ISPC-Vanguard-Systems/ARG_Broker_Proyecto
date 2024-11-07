@@ -98,3 +98,4 @@ class InversorDAO(InterfaceDAO):
     def actualizar(self, id, data):
         """Actualiza un registro existente"""
         raise NotImplementedError("El método actualizar no está implementado.")
+#hola
