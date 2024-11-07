@@ -109,6 +109,8 @@ Este proyecto está diseñado para crecer y escalar, permitiendo la adición de 
 <br>
 <h2 align='center' >📍 Entregables Segunda Etapa</h2>
 
+<h3 align='center' >🚀 <a href="https://github.com/ISPC-Vanguard-Systems/ARG_Broker_Proyecto/blob/main/diagramaClasesBroker.pdf" align='center'>Diagrama de Clases</a></h3>
+
 <h3 align='center' >🚀 <a href="https://github.com/ISPC-Vanguard-Systems/ARG_Broker_Proyecto/blob/main/app/base_de_datos/EER_broker.pdf" align='center'>Diagrama ER Base de Datos</a></h3>
 
 <h3 align='center' >🚀 <a href="https://github.com/ISPC-Vanguard-Systems/ARG_Broker_Proyecto/blob/main/app/base_de_datos/scrip_base_de_datos_broker.tex" align='center'>Script con las consultas Base de Datos </a></h3>
